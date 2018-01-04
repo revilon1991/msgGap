@@ -6,6 +6,9 @@
   align-items: center;
   flex-direction: row; }
 
+.vk_wrapper {
+  display: block; }
+
 .toContacts {
   position: absolute;
   top: 0;
@@ -55,5 +58,16 @@
 
 .contactId {
   display: none; }
+
+.modalSms {
+  background-color: #9fcdff; }
+
+.inputMessage {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap; }
+  .inputMessage .sendMessage {
+    font-size: 26px;
+    margin-left: 13px; }
 
 /*# sourceMappingURL=main.css.map */

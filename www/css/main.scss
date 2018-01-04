@@ -6,6 +6,9 @@
   align-items: center;
   flex-direction: row;
 }
+.vk_wrapper {
+  display: block;
+}
 .toContacts {
   position: absolute;
   top: 0;
@@ -23,7 +26,6 @@
   height: 50px;
   padding: 15px;
   border-radius: 45px;
-  //background-image: url("https://pp.userapi.com/c840138/v840138779/29b1c/-czG1W33ec4.jpg");
   background-position: center;
 }
 .searchContacts {
@@ -58,4 +60,16 @@
 }
 .contactId {
   display: none;
+}
+.modalSms {
+  background-color: #9fcdff;
+}
+.inputMessage {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  .sendMessage {
+    font-size: 26px;
+    margin-left: 13px;
+  }
 }

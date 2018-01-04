@@ -24,10 +24,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
+
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
+
+
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:;"  />-->
+    <meta http-equiv="Content-Security-Policy" content="default-src *;
+   img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
+   style-src  'self' 'unsafe-inline' *">
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -49,17 +55,23 @@
 <body>
     <div class="app container">
         <div class="container-fluid loginPage">
-            <div class="row-fluid">
+            <!--User Name:<input type="text" id="username" /><br />-->
+            <!--Password: <input type="text" id="password" /><br />-->
+            <!--<button id="btnSave">Save Data</button><br />-->
+            <!--<button id="btnGet">Get Data</button><br />-->
+            <!--<div id="result"></div>-->
+            <div class="row-fluid" >
                 <div class="col-xs-12">
                     <div class="authorize">
                         Авторизуйтесь
                     </div>
+
                     <div class="toContacts">
                         I'm an arrow :)
                     </div>
                 </div>
             </div>
-            <p id="deviceProperties">Loading device properties...</p>
+            <p id="deviceProperties">Loading device properties</p>
             <div class="row-fluid">
                 <div class="col-xs-12">
                     <div class="vk_wrapper wrapper">
@@ -67,7 +79,8 @@
                             Вконтакте
                         </div>
                         <div>
-                            <div class="login-page_login">
+                            <div class="login-page_login"
+                            >
                                 <label for="vk_login">login</label>
                                 <input id="vk_login" type="text" name="vk_login">
                             </div>
@@ -78,7 +91,7 @@
                             </div>
                         </div>
                     </div>
-                    <input class="submitData" type="submit" value="логин" name="vk_submit">
+                    <input class="submitData"  type="submit" value="логин" name="vk_submit">
                 </div>
             </div>
         </div>
@@ -105,40 +118,55 @@
 
                         <!--</div>-->
                         <!--<div class="contactInfo">-->
-                            <!--<div class="contactName">-->
+                        <!--<div class="contactName">-->
 
-                            <!--</div>-->
-                            <!--<div class="contactLastMessage">-->
+                        <!--</div>-->
+                        <!--<div class="contactLastMessage">-->
 
-                            <!--</div>-->
+                        <!--</div>-->
                         <!--</div>-->
                     </div>
                 </div>
             </div>
         </div>
         <div class="container-fluid chatPage" style="display:none;">
-        <div class="row-fluid">
-            <div class="col-sx-12">
-                <!--<div class="toContacts">-->
+            <div class="row-fluid">
+                <div class="col-sx-12">
+                    <!--<div class="toContacts">-->
                     <!--I'm an arrow <- -->
-                <!--</div>-->
-                <div class="nameChat"></div>
-                <!--<div class="toAuthorize">-->
+                    <!--</div>-->
+                    <div class="nameChat"></div>
+                    <!--<div class="toAuthorize">-->
                     <!--I'm an arrow ->-->
-                <!--</div>-->
+                    <!--</div>-->
+                </div>
+                <div class="col-sx-12">
+                    <div class="messagesChat"></div>
+                </div>
+                <div class="col-sx-12">
+                    <div class="inputMessage">
+                        <div class="attachesMessage">@</div>
+                        <input class="textMessage" type="text" placeholder="Введите текст">
+                        <div class="sendMessage">></div>
+                    </div>
+
+                </div>
             </div>
-            <div class="col-sx-12">
-                <div class="messagesChat"></div>
-            </div>
-            <div class="col-sx-12">
-                <div class="attaches">@</div>
-                <input class="textMessage" type="text" placeholder="Введите текст" >
-                <div class="sendMessage">></div>
+        </div>
+        <div class="modalSms modal">
+            <label for="modalSmsBox">Введите код полученнный в СМС</label>
+            <input id="modalSmsBox" type="text">
+            <div class="modalSmsSubmit">Отправить</div>
+            <div class="modalSmsCancel">Отмена</div>
+
+            <div class="modalCaptcha modal">
+                <label for="modalCaptchaBox">Введите код</label>
+                <input id="modalCaptchaBox" type="text">
+                <div class="modalCaptchaSubmit">Отправить</div>
+                <div class="modalCaptchaCancel">Отмена</div>
             </div>
         </div>
     </div>
-    </div>
-
 
 
     <script type="text/javascript" src="cordova.js"></script>
@@ -151,6 +179,7 @@
     <script type="text/javascript">
         app.initialize();
     </script>
+
 </body>
 
 </html>
