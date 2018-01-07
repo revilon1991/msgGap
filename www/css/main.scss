@@ -16,7 +16,7 @@
   display: inline;
 }
 .contactsPage {
-  display: none;
+  display: block;
 }
 #deviceProperties {
   display: none;
@@ -29,7 +29,10 @@
   background-position: center;
 }
 .searchContacts {
-  display: none;
+  display: block;
+}
+.loginPage {
+  display: block;
 }
 .messagesChat {
   flex-direction: column-reverse;
