@@ -1,0 +1,43 @@
+@startuml
+
+start
+
+partition Initialization {
+    :App start;
+
+    if (token isset?) then (yes)
+      if (token valid?) then (yes)
+        #4caf50:dialogs page;
+        detach
+      else (no)
+      endif
+    else (no)
+    endif
+    #AAAAAA:login page;
+
+    if (password valid?) then (no)
+      #AAAAAA:login page;
+      stop
+    elseif (sms checker?) then (yes)
+        if (sms valid?) then (no)
+            #AAAAAA:login page;
+            stop
+        else (yes)
+            if (captcha checker?) then (no)
+            else (yes)
+                if (captcha valid?) then (no)
+                    #AAAAAA:login page;
+                    stop
+                else (yes)
+                endif
+            endif
+        endif
+    else (no)
+    endif
+
+    #4caf50:dialogs page;
+}
+
+stop
+
+@enduml
