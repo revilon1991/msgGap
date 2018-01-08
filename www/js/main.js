@@ -1,32 +1,44 @@
 jQuery(function ($) {
+    function d(arg) {
+        console.log(arg);
+    }
+
     // окно браузера
 // var ref = cordova.InAppBrowser.open('https://twitter.github.io/typeahead.js/examples/', '_blank', 'location=yes');
 // ref.addEventListener('loadstart', function(event) { alert(event.url); });
     //resume
-//         document.addEventListener("resume", function () {
-//             var token_vk = window.localStorage.getItem('token_vk');
-//             $.ajax({
-//                 method: 'GET',
-//                 url: 'http://msg.9ek.ru/check_token/vk',
-//                 data: {
-//                     token_vk: token_vk
-//                 },
-//                 beforeSend: function () {
-//                 },
-//                 error: function (data) {
-//                 },
-//                 complete: function () {
-//                 },
-//                 success: function (data) {
-//                     // getContactsPage(data);
-//                     console.log('токен отправлен');
-//                 }
-//             })
-//         });
-
-    function d(arg) {
-        console.log(arg);
+    function check_token() {
+        document.addEventListener("resume", function () {
+            var token_vk = window.localStorage.getItem('token_vk');
+            $.ajax({
+                method: 'GET',
+                url: 'http://msg.9ek.ru/check_token/vk',
+                data: {
+                    token_vk: token_vk
+                },
+                beforeSend: function () {
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+                    var res = JSON.stringify(data);
+                    d(res);
+                    alert('Работа возоблена')
+                }
+            });
+        });
     }
+    check_token();
+
+
+
+    var user = new Account(12143704, '9af252b5a7faf17d404d6f649e71aa65f704d0866cd120db63e42c5b5f4417136bf810f88ddd5b8b71873');
+
+    user.getHistory();
+
+
 
     $('.toContacts').on('click', function () {
         $('.loginPage').hide();
@@ -36,6 +48,7 @@ jQuery(function ($) {
         $('.loginPage').show();
         $('.contactsPage').hide();
     });
+
 
     function getContactsPage(data) {
         $.each(data.response.items, function (index, value) {
@@ -115,7 +128,7 @@ jQuery(function ($) {
                                             $('.toContacts').click();
                                             $('.modalSms ').hide();
                                             $('.modalCaptcha').hide();
-                                            getContactsPage(data);
+                                            // getContactsPage(data);
                                         }
                                     });
                                 }
@@ -139,7 +152,7 @@ jQuery(function ($) {
                             complete: function () {
                             },
                             success: function (data) {
-                                getContactsPage(data);
+                                // getContactsPage(data);
                             }
                         });
                     }
@@ -174,8 +187,7 @@ jQuery(function ($) {
         });
     }
 
-
-    $('.submitData').on('click', function () {
+    function submitData() {
         // var login = $('#vk_login').val();
         // var password = $('#vk_password').val();
         // if (login !== '' && password !== '') {
@@ -187,16 +199,19 @@ jQuery(function ($) {
                 'Device UUID: '     + device.uuid     + '<br />' +
                 'Device Version: '  + device.version  + '<br />';
         }
+    }
+    $('.submitData').on('click', function () {
+
         $.ajax({
             method: 'GET',
             url: 'http://msg.9ek.ru/login/vk',
             data: {
-                login: 'skaji.net1@mail.ru',
+                // login: 'skaji.net1@mail.ru',
                 // login: login,
-                // login: 'revil-on@mail.ru',
-                password: 'Gxgooccmg2',
+                login: 'revil-on@mail.ru',
+                // password: 'Gxgooccmg2',
                 // password: password,
-                // password: 'utihot62',
+                password: 'utihot62',
                 // platform:  device.platform,
                 uuid: '0046438'
                 // uuid: 'device.uuid'
@@ -210,56 +225,22 @@ jQuery(function ($) {
                 $('.submitData').prop("disabled", true);
             },
             success: function (data) {
-                // gjkexftv
+                // проверка смс
                 window.localStorage.setItem('session', data['session']);
                 window.localStorage.setItem('token_vk', data['token_vk']);
-                var sms_checker = data['status'];
+                var status_checker = data['status'];
                 // если получено смс
-
-                if (sms_checker === 'sms_checker') {
+                if (status_checker === 'sms_checker') {
                     $('.modalSms').show();
                     modalSmsSubmit();
                 }
-
                 // если без смс
-                else if (sms_checker === 'success') {
+                else if (status_checker === 'success') {
                     window.localStorage.setItem('token_vk', data['token_vk']);
                     var token_vk = window.localStorage.getItem('token_vk');
                     $('.toContacts').click();
-                    $.ajax({
-                        method: 'GET',
-                        url: 'http://msg.9ek.ru/friendList/vk',
-                        data: {
-                            token_vk: token_vk
-                        },
-                        beforeSend: function () {
-                        },
-                        error: function (data) {
-                        },
-                        complete: function () {
-                        },
-                        success: function (data) {
-                            getContactsPage(data);
-                        }
-                    });
-                    $.ajax({
-                        method: 'GET',
-                        url: 'https://api.vk.com/method/messages.getLongPollServer',
-                        data: {
-                            access_token: token_vk
-                        },
-                        beforeSend: function () {
-                        },
-                        error: function (data) {
-                        },
-                        complete: function () {
-                        },
-                        success: function (data) {
-                            window.localStorage.setItem('key', data.response.key);
-                            window.localStorage.setItem('server', data.response.server);
-                            window.localStorage.setItem('ts', data.response.ts);
-                        }
-                    });
+                    user.getFriendList();
+                    getLongPollServerForMessages(token_vk);
                 }
             }
         });
@@ -269,41 +250,41 @@ jQuery(function ($) {
         //     }
     });
     //
-    // function getHistory(id, token_vk) {
-    //     $.ajax({
-    //         method: 'GET',
-    //         url: 'https://api.vk.com/method/messages.getHistory',
-    //         data: {
-    //             user_id: id,
-    //             access_token: token_vk
-    //         },
-    //         beforeSend: function () {
-    //         },
-    //         error: function (data) {
-    //         },
-    //         complete: function () {
-    //         },
-    //         success: function (data) {
-    //             //посчитать респонс даты, зсунуть количество в i < это число
-    //             for (var i = 1; i < 10; i++) {
-    //                 var msg = data.response[i].body;
-    //                 $('.messagesChat').prepend('<div>' + msg + '</div>');
-    //             }
-    //         }
-    //     });
-    // }
-
-    sendToServer();
-
-    function getFour(res) {
-        res.updates.forEach(function (item) {
-            if (item[0] === 4) {
-                var id = window.localStorage.getItem(item[3]),
-                    token_vk = window.localStorage.getItem('token_vk');
-                getHistory(id, token_vk);
+    function getHistory(id, token_vk) {
+        $.ajax({
+            method: 'GET',
+            url: 'https://api.vk.com/method/messages.getHistory',
+            data: {
+                user_id: id,
+                access_token: token_vk
+            },
+            beforeSend: function () {
+            },
+            error: function (data) {
+            },
+            complete: function () {
+            },
+            success: function (data) {
+                //посчитать респонс даты, зсунуть количество в i < это число
+                for (var i = 1; i < 10; i++) {
+                    var msg = data.response[i].body;
+                    $('.messagesChat').prepend('<div>' + msg + '</div>');
+                }
             }
         });
     }
+
+    // sendToServer();
+
+    // function getFour(res) {
+    //     res.updates.forEach(function (item) {
+    //         if (item[0] === 4) {
+    //             var id = window.localStorage.getItem(item[3]),
+    //                 token_vk = window.localStorage.getItem('token_vk');
+    //             getHistory(id, token_vk);
+    //         }
+    //     });
+    // }
 
     function sendToServer() {
         var key = window.localStorage.getItem('key');
@@ -328,63 +309,14 @@ jQuery(function ($) {
             },
             success: function (data) {
                 var res = JSON.parse(data);
-                sendToServer();
+                // sendToServer();
                 window.localStorage.setItem('ts', res.ts);
-                getFour(res);
+                // getFour(res);
             }
         });
     }
 
-    function Account(id, token_vk) {
-        this.token_vk = token_vk;
-        this.id = id;
-        this.getFriendList = function () {
-            $.ajax({
-                method: 'GET',
-                url: 'http://msg.9ek.ru/friendList/vk',
-                data: {
-                    token_vk: this.token_vk
-                },
-                beforeSend: function () {
-                },
-                error: function (data) {
-                },
-                complete: function () {
-                },
-                success: function (data) {
-                    getContactsPage(data);
-                }
-            });
-        };
-        this.getHistory = function () {
-            $.ajax({
-                method: 'GET',
-                url: 'https://api.vk.com/method/messages.getHistory',
-                data: {
-                    user_id: this.id,
-                    access_token: this.token_vk
-                },
-                beforeSend: function () {
-                },
-                error: function (data) {
-                },
-                complete: function () {
-                },
-                success: function (data) {
-                    d(data);
-                    //посчитать респонс даты, зсунуть количество в i < это число
-                    // for (var i = 1; i < 10; i++) {
-                    //     var msg = data.response[i].body;
-                    //     $('.messagesChat').prepend('<div>' + msg + '</div>');
-                    // }
-                }
-            });
-        }
-    }
 
-    var user = new Account(12143704, '9af252b5a7faf17d404d6f649e71aa65f704d0866cd120db63e42c5b5f4417136bf810f88ddd5b8b71873');
-    user.getFriendList();
-    user.getHistory();
 
 
 
@@ -399,7 +331,8 @@ jQuery(function ($) {
         sendMessage();
     });
 });
-
+//1) ввести логин и пароль ->
+//2)
 // прием сообщений от сервера.
 // последнее сообщение пользователя на странице контактов
 // старт со страницы контактов для залогиненых пользователей
