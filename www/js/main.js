@@ -1,7 +1,8 @@
+function d(arg) {
+    console.log(arg);
+}
+
 jQuery(function ($) {
-    function d(arg) {
-        console.log(arg);
-    }
 
     // окно браузера
 // var ref = cordova.InAppBrowser.open('https://twitter.github.io/typeahead.js/examples/', '_blank', 'location=yes');
@@ -31,12 +32,18 @@ jQuery(function ($) {
         });
     }
     check_token();
+    // var authorization = new Authorization('revil-on@mail.ru', 'utihot62');
+    // var user = new User(12143704, '3fb07fab0a48c3098b34b8f50114c8eb54c6e45059a6e3c0efae3833c54cbffa2731e6f84adb611b6498b');
+    //
+    //
+    // authorization.getToken();
 
+    // user.getHistory();
+    var authorization = new Authorization('revil-on@mail.ru', 'utihot62');
+    authorization.buildToken();
 
-
-    var user = new Account(12143704, '9af252b5a7faf17d404d6f649e71aa65f704d0866cd120db63e42c5b5f4417136bf810f88ddd5b8b71873');
-
-    user.getHistory();
+    var user = new User(12143704, authorization);
+    user.getFriendList();
 
 
 
@@ -50,29 +57,14 @@ jQuery(function ($) {
     });
 
 
-    function getContactsPage(data) {
-        $.each(data.response.items, function (index, value) {
-            var contactPicture = '<div class="contactPicture" style="background-image:url(' + value.photo_200_orig + ')"></div>';
-            var contactInfo =
-                '<div class="contactInfo">'
-                + '<div class="contactName">'
-                + value.first_name
-                + '</div>'
-                + '<div class="contactLastSeen">'
-                + value.last_name
-                + '</div>'
-                + '<div class="contactId" data-id="'
-                + value.id
-                + '">'
-                + '</div>'
-                + '</div>';
-            $('.contact').append('<div class="contactWrapper" data-id="' + value.id + '">' + contactPicture + contactInfo + '</div>');
-        });
-    }
+
+
+
     function modalSmsSubmit() {
         $('.modalSmsSubmit').on('click', function () {
             var session = window.localStorage.getItem('session');
             var smsCode = $('#modalSmsBox').val();
+
             $.ajax({
                 method: 'GET',
                 url: 'http://msg.9ek.ru/sms/vk',
@@ -160,6 +152,7 @@ jQuery(function ($) {
             });
         });
     }
+
     function sendMessage() {
         $('.sendMessage').on('click', function () {
             var id = window.localStorage.getItem(user);
@@ -188,8 +181,7 @@ jQuery(function ($) {
     }
 
     function submitData() {
-        // var login = $('#vk_login').val();
-        // var password = $('#vk_password').val();
+
         // if (login !== '' && password !== '') {
         document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady() {
@@ -200,18 +192,20 @@ jQuery(function ($) {
                 'Device Version: '  + device.version  + '<br />';
         }
     }
-    $('.submitData').on('click', function () {
 
+    $('.submitData').on('click', function () {
+        var login = $('#vk_login').val();
+        var password = $('#vk_password').val();
         $.ajax({
             method: 'GET',
             url: 'http://msg.9ek.ru/login/vk',
             data: {
                 // login: 'skaji.net1@mail.ru',
-                // login: login,
-                login: 'revil-on@mail.ru',
+                login: login,
+                // login: 'revil-on@mail.ru',
                 // password: 'Gxgooccmg2',
-                // password: password,
-                password: 'utihot62',
+                password: password,
+                // password: 'utihot62',
                 // platform:  device.platform,
                 uuid: '0046438'
                 // uuid: 'device.uuid'
@@ -239,8 +233,8 @@ jQuery(function ($) {
                     window.localStorage.setItem('token_vk', data['token_vk']);
                     var token_vk = window.localStorage.getItem('token_vk');
                     $('.toContacts').click();
-                    user.getFriendList();
-                    getLongPollServerForMessages(token_vk);
+                    // user.getFriendList();
+                    // user.getLongPollServerForMessages();
                 }
             }
         });
@@ -265,7 +259,7 @@ jQuery(function ($) {
             complete: function () {
             },
             success: function (data) {
-                //посчитать респонс даты, зсунуть количество в i < это число
+                //посчитать респонс даты, засунуть количество в i < это число
                 for (var i = 1; i < 10; i++) {
                     var msg = data.response[i].body;
                     $('.messagesChat').prepend('<div>' + msg + '</div>');
@@ -273,63 +267,26 @@ jQuery(function ($) {
             }
         });
     }
-
-    // sendToServer();
-
-    // function getFour(res) {
-    //     res.updates.forEach(function (item) {
-    //         if (item[0] === 4) {
-    //             var id = window.localStorage.getItem(item[3]),
-    //                 token_vk = window.localStorage.getItem('token_vk');
-    //             getHistory(id, token_vk);
-    //         }
-    //     });
-    // }
-
-    function sendToServer() {
-        var key = window.localStorage.getItem('key');
-        var server = window.localStorage.getItem('server');
-        var wewe = window.localStorage.getItem('ts');
-        $.ajax({
-            method: "GET",
-            url: 'http://' + server,
-            data: {
-                act: 'a_check',
-                ts: wewe,
-                key: key,
-                wait: 5,
-                mode: 2,
-                version: 2
-            },
-            beforeSend: function () {
-            },
-            error: function (data) {
-            },
-            complete: function () {
-            },
-            success: function (data) {
-                var res = JSON.parse(data);
-                // sendToServer();
-                window.localStorage.setItem('ts', res.ts);
-                // getFour(res);
+    function getFour(res) {
+        res.updates.forEach(function (item) {
+            if (item[0] === 4) {
+                var id = window.localStorage.getItem(item[3]),
+                    token_vk = window.localStorage.getItem('token_vk');
+                getHistory(id, token_vk);
             }
         });
     }
 
-
-
-
-
-    $('body').on('click', '.contactWrapper', function () {
-        var user = $(this).data('id');
-        $('.contactsPage').hide();
-        window.localStorage.setItem(user, user);
-        var id = window.localStorage.getItem(user),
-            token_vk = window.localStorage.getItem('token_vk');
-        $('.chatPage').show();
-        getHistory(id, token_vk);
-        sendMessage();
-    });
+        $('.contact').on('click', '.contactWrapper', function () {
+            var user = $(this).data('id');
+            $('.contactsPage').hide();
+            window.localStorage.setItem(user, user);
+            var id = window.localStorage.getItem(user),
+                token_vk = window.localStorage.getItem('token_vk');
+            $('.chatPage').show();
+            getHistory(id, token_vk);
+            sendMessage();
+        });
 });
 //1) ввести логин и пароль ->
 //2)
