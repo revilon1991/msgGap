@@ -200,7 +200,6 @@ jQuery(function ($) {
         let id = window.localStorage.getItem(user),
             token_vk = window.localStorage.getItem('token_vk');
         $('.chatPage').show();
-        d(token_vk);
         getMessageHistory(id, token_vk);
     });
 });
