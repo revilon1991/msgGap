@@ -1,5 +1,4 @@
 function getFriendList(token_vk) {
-    // 9d385300c31b0f21a5597ede2e78343585e62f0bc1cec525ff48df9f428382616164c2dde82637a07eb2d
     let ajaxGetFriendList = new Ajax('http://msg.9ek.ru/friendList/vk');
 
     ajaxGetFriendList.setData({

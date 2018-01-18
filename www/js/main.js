@@ -154,52 +154,35 @@ jQuery(function ($) {
         });
     }
 
-    function sendMessage() {
         $('.sendMessage').on('click', function () {
-            var id = window.localStorage.getItem(user);
-            var token_vk = window.localStorage.getItem('token_vk'),
+            let id = $(this).closest('.chatPage').find('.contactWrapper').data('id');
+            let token_vk = window.localStorage.getItem('token_vk'),
                 message = $('.textMessage').val();
-            $.ajax({
-                method: 'GET',
-                url: 'http://msg.9ek.ru/send/vk',
-                data: {
-                    user_to: id,
-                    message: message,
-                    token_vk: token_vk
-                },
-                beforeSend: function () {
-                },
-                error: function (data) {
-                },
-                complete: function () {
-                },
-                success: function (data) {
-                    $('.messagesChat').prepend('<div>' + data.message + '</div>');
-                    $('.textMessage').val('');
-                }
-            });
+            d(message);
+            sendMessage(id, message, 'cae27a9c297b917064db885010cbef01243b82e594d1d4548b3f779739515c250bab45736b81224394b3b');
         });
-    }
 
 
-
-    function getFour(res) {
-        res.updates.forEach(function (item) {
-            if (item[0] === 4) {
-                var id = window.localStorage.getItem(item[3]),
-                    token_vk = window.localStorage.getItem('token_vk');
-                getHistory(id, token_vk);
-            }
-        });
-    }
+    //
+    // function getFour(res) {
+    //     res.updates.forEach(function (item) {
+    //         if (item[0] === 4) {
+    //             var id = window.localStorage.getItem(item[3]),
+    //                 token_vk = window.localStorage.getItem('token_vk');
+    //             getHistory(id, token_vk);
+    //         }
+    //     });
+    // }
 
     $('.contact').on('click', '.contactWrapper', function () {
         let user = $(this).data('id');
+        let clone = $(this).clone();
         $('.contactsPage').hide();
         window.localStorage.setItem(user, user);
         let id = window.localStorage.getItem(user),
             token_vk = window.localStorage.getItem('token_vk');
         $('.chatPage').show();
+        $('.nameChat').append(clone);
         getMessageHistory(id, 'cae27a9c297b917064db885010cbef01243b82e594d1d4548b3f779739515c250bab45736b81224394b3b');
     });
 });
