@@ -3,50 +3,6 @@ function d(arg) {
 }
 
 jQuery(function ($) {
-
-    // окно браузера
-// var ref = cordova.InAppBrowser.open('https://twitter.github.io/typeahead.js/examples/', '_blank', 'location=yes');
-// ref.addEventListener('loadstart', function(event) { alert(event.url); });
-    //resume
-    function check_token() {
-        document.addEventListener("resume", function () {
-            var token_vk = window.localStorage.getItem('token_vk');
-            $.ajax({
-                method: 'GET',
-                url: 'http://msg.9ek.ru/check_token/vk',
-                data: {
-                    token_vk: token_vk
-                },
-                beforeSend: function () {
-                },
-                error: function (data) {
-                },
-                complete: function () {
-                },
-                success: function (data) {
-                    var res = JSON.stringify(data);
-                    d(res);
-                    alert('Работа возоблена')
-                }
-            });
-        });
-    }
-    check_token();
-    // var authorization = new Authorization('revil-on@mail.ru', 'utihot62');
-    // var user = new User(12143704, '3fb07fab0a48c3098b34b8f50114c8eb54c6e45059a6e3c0efae3833c54cbffa2731e6f84adb611b6498b');
-    //
-    //
-    // authorization.getToken();
-
-    // user.getHistory();
-    var authorization = new Authorization('revil-on@mail.ru', 'utihot62');
-    authorization.buildToken();
-
-    var user = new User(12143704, authorization);
-    user.getFriendList();
-
-
-
     $('.toContacts').on('click', function () {
         $('.loginPage').hide();
         $('.contactsPage').show();
@@ -58,6 +14,57 @@ jQuery(function ($) {
 
 
 
+    let ajax = new Ajax('login/vk');
+    //1) Залогинивание
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        let element = document.getElementById('deviceProperties');
+        element.innerHTML =
+            'Device Platform: ' + device.platform + '<br />' +
+            'Device UUID: ' + device.uuid + '<br />' +
+            'Device Version: ' + device.version + '<br />';
+    }
+
+
+    $('.submitData').on('click', function () {
+        let login = $('#vk_login').val();
+        let password = $('#vk_password').val();
+        if (login !== '' && password !== '') {
+
+            ajax.setData({
+                // login: 'revil-on@mail.ru',
+                // password: 'utihot62',
+                login: login,
+                password: password,
+                uuid: '9813908',
+            });
+            ajax.handler(function (data) {
+                console.log(data);
+                window.localStorage.setItem('session', data['session']);
+                window.localStorage.setItem('token_vk', data['token_vk']);
+                let status_checker = data['status'];
+                if (status_checker === 'sms_checker') {
+                    $('.modalSms').show();
+                }
+                else if (status_checker === 'success') {
+                    let token_vk = window.localStorage.getItem('token_vk');
+                    $('.toContacts').click();
+                    getFriendList(token_vk);
+                }
+            });
+
+        }
+    });
+    getFriendList('9d385300c31b0f21a5597ede2e78343585e62f0bc1cec525ff48df9f428382616164c2dde82637a07eb2d');
+
+    //рабочий токен
+//9d385300c31b0f21a5597ede2e78343585e62f0bc1cec525ff48df9f428382616164c2dde82637a07eb2d
+    // session
+// gks288ed29kvp5386dgbsi50lm
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     function modalSmsSubmit() {
@@ -180,70 +187,6 @@ jQuery(function ($) {
         });
     }
 
-    function submitData() {
-
-        // if (login !== '' && password !== '') {
-        document.addEventListener("deviceready", onDeviceReady, false);
-        function onDeviceReady() {
-            var element = document.getElementById('deviceProperties');
-            element.innerHTML =
-                'Device Platform: ' + device.platform + '<br />' +
-                'Device UUID: '     + device.uuid     + '<br />' +
-                'Device Version: '  + device.version  + '<br />';
-        }
-    }
-
-    $('.submitData').on('click', function () {
-        var login = $('#vk_login').val();
-        var password = $('#vk_password').val();
-        $.ajax({
-            method: 'GET',
-            url: 'http://msg.9ek.ru/login/vk',
-            data: {
-                // login: 'skaji.net1@mail.ru',
-                login: login,
-                // login: 'revil-on@mail.ru',
-                // password: 'Gxgooccmg2',
-                password: password,
-                // password: 'utihot62',
-                // platform:  device.platform,
-                uuid: '0046438'
-                // uuid: 'device.uuid'
-                // version: version
-            },
-            beforeSend: function () {
-            },
-            error: function (data) {
-            },
-            complete: function () {
-                $('.submitData').prop("disabled", true);
-            },
-            success: function (data) {
-                // проверка смс
-                window.localStorage.setItem('session', data['session']);
-                window.localStorage.setItem('token_vk', data['token_vk']);
-                var status_checker = data['status'];
-                // если получено смс
-                if (status_checker === 'sms_checker') {
-                    $('.modalSms').show();
-                    modalSmsSubmit();
-                }
-                // если без смс
-                else if (status_checker === 'success') {
-                    window.localStorage.setItem('token_vk', data['token_vk']);
-                    var token_vk = window.localStorage.getItem('token_vk');
-                    $('.toContacts').click();
-                    // user.getFriendList();
-                    // user.getLongPollServerForMessages();
-                }
-            }
-        });
-        // } else
-        //     {
-        //         alert('Введите логин/пароль');
-        //     }
-    });
-    //
     function getHistory(id, token_vk) {
         $.ajax({
             method: 'GET',
@@ -259,14 +202,16 @@ jQuery(function ($) {
             complete: function () {
             },
             success: function (data) {
-                //посчитать респонс даты, засунуть количество в i < это число
-                for (var i = 1; i < 10; i++) {
-                    var msg = data.response[i].body;
+                d(data.response.length);
+                // посчитать респонс даты, засунуть количество в i < это число
+                for (let i = 1; i < data.response.length; i++) {
+                    let msg = data.response[i].body;
                     $('.messagesChat').prepend('<div>' + msg + '</div>');
                 }
             }
         });
     }
+
     function getFour(res) {
         res.updates.forEach(function (item) {
             if (item[0] === 4) {
@@ -277,23 +222,17 @@ jQuery(function ($) {
         });
     }
 
-        $('.contact').on('click', '.contactWrapper', function () {
-            var user = $(this).data('id');
-            $('.contactsPage').hide();
-            window.localStorage.setItem(user, user);
-            var id = window.localStorage.getItem(user),
-                token_vk = window.localStorage.getItem('token_vk');
-            $('.chatPage').show();
-            getHistory(id, token_vk);
-            sendMessage();
-        });
+    $('.contact').on('click', '.contactWrapper', function () {
+        let user = $(this).data('id');
+        $('.contactsPage').hide();
+        window.localStorage.setItem(user, user);
+        let id = window.localStorage.getItem(user),
+            token_vk = window.localStorage.getItem('token_vk');
+        $('.chatPage').show();
+        getHistory(id, token_vk);
+    });
 });
-//1) ввести логин и пароль ->
-//2)
-// прием сообщений от сервера.
-// последнее сообщение пользователя на странице контактов
-// старт со страницы контактов для залогиненых пользователей
-// разобрать все по функциям ajsx с использованием параметров
-// дизейблить кнопки отправки нажатия
-// не работает на айфоне заход в контакты, возможно дальше, хз
-// аппендить чат
+
+
+// var ref = cordova.InAppBrowser.open('https://twitter.github.io/typeahead.js/examples/', '_blank', 'location=yes');
+// ref.addEventListener('loadstart', function(event) { alert(event.url); });
