@@ -200,7 +200,7 @@ jQuery(function ($) {
         let id = window.localStorage.getItem(user),
             token_vk = window.localStorage.getItem('token_vk');
         $('.chatPage').show();
-        getMessageHistory(id, token_vk);
+        getMessageHistory(id, 'cae27a9c297b917064db885010cbef01243b82e594d1d4548b3f779739515c250bab45736b81224394b3b');
     });
 });
 
