@@ -14,7 +14,7 @@ jQuery(function ($) {
 
 
 
-    let ajax = new Ajax('login/vk');
+    let ajax = new Ajax('http://msg.9ek.ru/login/vk');
     //1) Залогинивание
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -56,13 +56,7 @@ jQuery(function ($) {
 
         }
     });
-    getFriendList('9d385300c31b0f21a5597ede2e78343585e62f0bc1cec525ff48df9f428382616164c2dde82637a07eb2d');
-
-    //рабочий токен
-//9d385300c31b0f21a5597ede2e78343585e62f0bc1cec525ff48df9f428382616164c2dde82637a07eb2d
-    // session
-// gks288ed29kvp5386dgbsi50lm
-
+    getFriendList('cae27a9c297b917064db885010cbef01243b82e594d1d4548b3f779739515c250bab45736b81224394b3b');
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -187,30 +181,7 @@ jQuery(function ($) {
         });
     }
 
-    function getHistory(id, token_vk) {
-        $.ajax({
-            method: 'GET',
-            url: 'https://api.vk.com/method/messages.getHistory',
-            data: {
-                user_id: id,
-                access_token: token_vk
-            },
-            beforeSend: function () {
-            },
-            error: function (data) {
-            },
-            complete: function () {
-            },
-            success: function (data) {
-                d(data.response.length);
-                // посчитать респонс даты, засунуть количество в i < это число
-                for (let i = 1; i < data.response.length; i++) {
-                    let msg = data.response[i].body;
-                    $('.messagesChat').prepend('<div>' + msg + '</div>');
-                }
-            }
-        });
-    }
+
 
     function getFour(res) {
         res.updates.forEach(function (item) {
@@ -229,7 +200,8 @@ jQuery(function ($) {
         let id = window.localStorage.getItem(user),
             token_vk = window.localStorage.getItem('token_vk');
         $('.chatPage').show();
-        getHistory(id, token_vk);
+        d(token_vk);
+        getMessageHistory(id, token_vk);
     });
 });
 

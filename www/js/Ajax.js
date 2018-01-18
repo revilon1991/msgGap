@@ -1,6 +1,6 @@
 class Ajax {
     constructor(api, params = {}) {
-        this.api = 'http://msg.9ek.ru/' + api;
+        this.api = api;
         this.method = (params.method) ? params.method : 'get';
     }
 
