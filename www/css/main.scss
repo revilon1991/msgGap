@@ -35,7 +35,8 @@
   //display: none;
 }
 .messagesChat {
-  flex-direction: column-reverse;
+  flex-direction: column;
+  overflow: scroll;
   height: 300px;
   justify-content: flex-start;
   align-items: flex-start;
