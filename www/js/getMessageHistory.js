@@ -1,6 +1,6 @@
 function getMessageHistory(id, token_vk) {
     let ajaxGetMessageHistory = new Ajax('https://api.vk.com/method/messages.getHistory');
-
+    d(id);
     ajaxGetMessageHistory.setData({
         user_id: id,
         access_token: token_vk

@@ -12,6 +12,7 @@ function getLongPollServerForMessages(token_vk) {
         let server = data.response.server;
         let ts = data.response.ts;
         let key = data.response.key;
+
         setInterval( function(){
             getServerForLongPoll(server, ts, key, token_vk)
         }, 10000 );
