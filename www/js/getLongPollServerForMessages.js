@@ -1,4 +1,4 @@
-function getLongPollServerForMessages(token_vk) {
+function getLongPollServer(token_vk) {
     let ajaxGetLongPollServerForMessages = new Ajax('https://api.vk.com/method/messages.getLongPollServer');
 
     ajaxGetLongPollServerForMessages.setData({
@@ -13,22 +13,22 @@ function getLongPollServerForMessages(token_vk) {
         let ts = data.response.ts;
         let key = data.response.key;
 
-        setInterval( function(){
-            getServerForLongPoll(server, ts, key, token_vk)
-        }, 10000 );
+        // setInterval( function(){
+        getLongPoll(server, ts, key, token_vk)
+        // }, 10000 );
 
 
     });
 }
 
-function getServerForLongPoll(server, ts_vk, key_vk, token_vk) {
+function getLongPoll(server, ts_vk, key_vk, token_vk) {
 
     let ajaxGetServerForLongPoll = new Ajax('http://' + server);
     ajaxGetServerForLongPoll.setData({
         act: 'a_check',
         ts: ts_vk,
         key: key_vk,
-        wait: 5,
+        wait: 25,
         mode: 2,
         version: 2
     });
