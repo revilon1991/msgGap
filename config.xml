@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>helloworld</name>
+<widget id="com.9ek.msg" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>msg</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Too many social networks have become in our time, it's time to unite them in one convenient application
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="revil-on@mail.ru" href="https://9ek.ru">
+        Evgeniy Kuznetsov and Vladimir Vlasyuk
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />

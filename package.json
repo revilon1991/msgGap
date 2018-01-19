@@ -1,7 +1,7 @@
 {
-  "name": "com.phonegap.helloworld",
-  "version": "1.0.0",
-  "displayName": "helloworld",
+  "name": "com.9ek.msg",
+  "version": "0.0.1",
+  "displayName": "msg",
   "cordova": {
     "platforms": [
       "ios"
