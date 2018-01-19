@@ -1,4 +1,4 @@
-function sendMessage(message, id, token_vk) {
+function sendMessage(id, message, token_vk) {
     let ajaxSendMessage = new Ajax('http://msg.9ek.ru/send/vk');
 
     ajaxSendMessage.setData({
@@ -11,33 +11,4 @@ function sendMessage(message, id, token_vk) {
         $('.messagesChat').append('<div>' + data.message + '</div>');
         $('.textMessage').val('');
     });
-
-
-
-
-
-
-
-
-
-    //
-    // $.ajax({
-    //     method: 'GET',
-    //     url: 'http://msg.9ek.ru/send/vk',
-    //     data: {
-    //         user_to: id,
-    //         message: message,
-    //         token_vk: token_vk
-    //     },
-    //     beforeSend: function () {
-    //     },
-    //     error: function (data) {
-    //     },
-    //     complete: function () {
-    //     },
-    //     success: function (data) {
-    //         $('.messagesChat').prepend('<div>' + data.message + '</div>');
-    //         $('.textMessage').val('');
-    //     }
-    // });
 }

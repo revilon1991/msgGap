@@ -6,7 +6,7 @@ function getMessageHistory(id, token_vk) {
         access_token: token_vk
     });
     ajaxGetMessageHistory.handler(function (data) {
-        // d(data);
+        d(data);
         for (let i = 1; i < data.response.length; i++) {
             let msg = data.response[i].body;
             $('.messagesChat').prepend('<div >' + msg + '</div>');
