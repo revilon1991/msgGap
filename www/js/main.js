@@ -63,6 +63,10 @@ jQuery(function ($) {
     friendList.build();
 
     getLongPoll(staticToken);
+
+    // Получение информации о пользователе
+    let userInfo = new UserInfo(staticToken);
+    userInfo.take('12143704');
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
