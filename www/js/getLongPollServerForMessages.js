@@ -13,17 +13,19 @@ function getLongPoll(token_vk) {
         // let ts = data.response.ts;
         // let key = data.response.key;
         // setInterval(function () {
-            getNewMessages();
+        let ts =  window.localStorage.getItem('ts');
+        getNewMessages(ts);
         // }, 10000) ;
-
     });
 }
 
-function getNewMessages() {
+function getNewMessages(ts) {
+    if (!ts) {
+         ts =  window.localStorage.getItem('ts');
+    }
     let key =  window.localStorage.getItem('key');
     let server =  window.localStorage.getItem('server');
-    let ts =  window.localStorage.getItem('ts');
-    // let token_vk =  window.localStorage.getItem('token_vk');
+    let token_vk =  window.localStorage.getItem('token_vk');
     let ajaxGetServerForLongPoll = new Ajax('http://' + server);
     ajaxGetServerForLongPoll.setData({
         act: 'a_check',
@@ -35,20 +37,24 @@ function getNewMessages() {
     });
     ajaxGetServerForLongPoll.handler(function (data) {
         let res = JSON.parse(data);
-        //протухший сервер ?
-        // if ()
+        d(res.ts);
+        if (data.failed) {
+            getLongPoll(token_vk);
+        }
             // window.localStorage.setItem('ts', res.ts);
         for (let i = 0; i < res.updates.length; i++) {
-d('сработало ');
             if (res.updates[i][0] === 4 ) {
                 let msg = res.updates[i][5];
                 $('.messagesChat').append('<div >' + msg + '</div>');
                 // getMessageHistory(res.updates[i][3], token_vk)
+                return;
             }
-
         }
-
+        d("вторая попытка");
+        d(res.ts);
+        getNewMessages(res.ts);
     });
+
 }
 
 
