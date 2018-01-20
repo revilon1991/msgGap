@@ -14,7 +14,7 @@ jQuery(function ($) {
         $('.contactsPage').hide();
     });
 
-    // 1) Залогинивание
+    // 1) Залогинивание test
     // let ajax = new Ajax('http://msg.9ek.ru/login/vk');
     let ajax = new Ajax('http://msg.9ek.ru/login/vk');
 
