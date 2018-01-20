@@ -20,9 +20,7 @@ function getLongPoll(token_vk) {
 }
 
 function getNewMessages(ts) {
-    if (!ts) {
-         ts =  window.localStorage.getItem('ts');
-    }
+    d(ts);
     let key =  window.localStorage.getItem('key');
     let server =  window.localStorage.getItem('server');
     let token_vk =  window.localStorage.getItem('token_vk');
@@ -36,8 +34,9 @@ function getNewMessages(ts) {
         version: 2
     });
     ajaxGetServerForLongPoll.handler(function (data) {
+        d(data);
         let res = JSON.parse(data);
-        d(res.ts);
+        // d(res.ts);
         if (data.failed) {
             getLongPoll(token_vk);
         }
@@ -47,11 +46,9 @@ function getNewMessages(ts) {
                 let msg = res.updates[i][5];
                 $('.messagesChat').append('<div >' + msg + '</div>');
                 // getMessageHistory(res.updates[i][3], token_vk)
-                return;
             }
         }
-        d("вторая попытка");
-        d(res.ts);
+
         getNewMessages(res.ts);
     });
 
