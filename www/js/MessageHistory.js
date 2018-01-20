@@ -2,7 +2,7 @@ class MessageHistory {
     constructor(token_vk) {
         this.ajaxMessageHistory = new Ajax('https://api.vk.com/method/messages.getHistory');
         this.ajaxMessageHistory.setData({
-            token_vk: token_vk
+            access_token: token_vk
         });
     }
 

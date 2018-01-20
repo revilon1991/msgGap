@@ -2,7 +2,7 @@ function d(arg) {
     console.log(arg);
 }
 
-var staticToken = '8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157';
+let staticToken = '8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157';
 
 jQuery(function ($) {
     $('.toContacts').on('click', function () {
@@ -62,7 +62,7 @@ jQuery(function ($) {
     let friendList = new FriendList(staticToken);
     friendList.build();
 
-    getLongPoll('8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157');
+    getLongPoll(staticToken);
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -81,6 +81,7 @@ jQuery(function ($) {
         let messageHistory = new MessageHistory(staticToken);
         messageHistory.build(id);
     });
+
 // Отправка сообщения в чат
     $('.sendMessage').on('click', function () {
         let id = $(this).closest('.chatPage').find('.contactWrapper').data('id');
@@ -88,6 +89,7 @@ jQuery(function ($) {
             message = $('.textMessage').val();
 
         let sendMessage = new SendMessage(staticToken);
+        // sendMessage.send(id, message);
         sendMessage.send(id, message);
     });
 
@@ -96,16 +98,6 @@ jQuery(function ($) {
 });
 
 
-//
-// function getFour(res) {
-//     res.updates.forEach(function (item) {
-//         if (item[0] === 4) {
-//             var id = window.localStorage.getItem(item[3]),
-//                 token_vk = window.localStorage.getItem('token_vk');
-//             getHistory(id, token_vk);
-//         }
-//     });
-// }
 // function modalSmsSubmit() {
 //     $('.modalSmsSubmit').on('click', function () {
 //         var session = window.localStorage.getItem('session');
