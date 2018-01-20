@@ -80,8 +80,8 @@ jQuery(function ($) {
         let id = $(this).closest('.chatPage').find('.contactWrapper').data('id');
         let token_vk = window.localStorage.getItem('token_vk'),
             message = $('.textMessage').val();
-        // sendMessage(id, message, '8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157');
         sendMessage(id, message, '8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157');
+        // sendMessage(id, message, '8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157');
     });
 
 
