@@ -2,10 +2,15 @@ class Ajax {
     constructor(api, params = {}) {
         this.api = api;
         this.method = (params.method) ? params.method : 'get';
+        this.data = {};
     }
 
     setData(data) {
         this.data = data;
+    }
+
+    addData(data) {
+        this.data = Object.assign(this.data, data);
     }
 
     handler(callable) {
