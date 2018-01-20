@@ -7,7 +7,6 @@ function sendMessage(id, message, token_vk) {
         token_vk: token_vk
     });
     ajaxSendMessage.handler(function (data) {
-        d(data);
         $('.messagesChat').append('<div>' + data.message + '</div>');
         $('.textMessage').val('');
     });

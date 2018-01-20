@@ -55,9 +55,10 @@ jQuery(function ($) {
         }
     });
 
+
     // 2) получение списка друзей
     getFriendList('8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157');
-    getLongPollServer('8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157');
+    getLongPoll('8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157');
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -79,9 +80,8 @@ jQuery(function ($) {
         let id = $(this).closest('.chatPage').find('.contactWrapper').data('id');
         let token_vk = window.localStorage.getItem('token_vk'),
             message = $('.textMessage').val();
-        // d(message);
-        // sendMessage(id, message, 'cae27a9c297b917064db885010cbef01243b82e594d1d4548b3f779739515c250bab45736b81224394b3b');
-        sendMessage(id, message, 'cae27a9c297b917064db885010cbef01243b82e594d1d4548b3f779739515c250bab45736b81224394b3b');
+        sendMessage(id, message, '8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157');
+        // sendMessage(id, message, '8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157');
     });
 
 
