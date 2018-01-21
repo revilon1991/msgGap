@@ -2,21 +2,31 @@ function d(arg) {
     console.log(arg);
 }
 
-let staticToken = '8ba5e91042554e9efc8d90d50c5862f1c8d2134976a048578a3a1dae5620790e7ffe99c28b135497da157';
-
+let staticToken = '1f21b4d8acd12764535509e8fe6b1edb3efc9d4d2d95260ff6622b98219abe534456b5509dd27b2ed2904';
+// 1f21b4d8acd12764535509e8fe6b1edb3efc9d4d2d95260ff6622b98219abe534456b5509dd27b2ed2904
 jQuery(function ($) {
     $('.toContacts').on('click', function () {
-        $('.loginPage').hide();
         $('.contactsPage').show();
+        $('.dialogsPage').hide();
+        $('.loginPage').hide();
     });
     $('.toAuthorize').on('click', function () {
         $('.loginPage').show();
         $('.contactsPage').hide();
+        $('.dialogsPage').hide();
     });
-
+    $('.toDialogs').on('click', function () {
+        $('.loginPage').hide();
+        $('.contactsPage').hide();
+        $('.dialogsPage').show();
+    });
     // 1) Залогинивание
-    // let ajax = new Ajax('http://msg.9ek.ru/login/vk');
+
     let ajax = new Ajax('http://msg.9ek.ru/login/vk');
+    // let ajax = new Ajax('http://msg.9ek.ru/login/vk');
+    let sms_checker = new Sms();
+    let captcha = new Captcha();
+
 
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
@@ -49,24 +59,36 @@ jQuery(function ($) {
                     let token_vk = window.localStorage.getItem('token_vk');
                     d(token_vk);
                     $('.toContacts').click();
-                    // getFriendList(token_vk);
+                    let friendList = new FriendList(token_vk);
+                    friendList.build();
                     // getLongPollServerForMessages(token_vk);
 
                 }
             });
         }
     });
+    $('.modalSmsSubmit').on('click', function () {
+        let session = window.localStorage.getItem('session');
+        let sms_code = $('#modalSmsBox').val();
+        sms_checker.build(session, sms_code);
+    });
 
+
+    $('.modalCaptchaSubmit').on('click', function () {
+        let session = window.localStorage.getItem('session');
+        let captcha_code = $('#modalCaptchaBox').val();
+        captcha.build(session, captcha_code);
+    });
 
     // 2) получение списка друзей
-    let friendList = new FriendList(staticToken);
-    friendList.build();
-
-    getLongPoll(staticToken);
-
-    // Получение информации о пользователе
-    let userInfo = new UserInfo(staticToken);
-    userInfo.take('12143704');
+    // let friendList = new FriendList(staticToken);
+    // friendList.build();
+    //
+    // getLongPoll(staticToken);
+    //
+    // // Получение информации о пользователе
+    // let userInfo = new UserInfo(staticToken);
+    // userInfo.take('12143704');
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -102,97 +124,6 @@ jQuery(function ($) {
 });
 
 
-// function modalSmsSubmit() {
-//     $('.modalSmsSubmit').on('click', function () {
-//         var session = window.localStorage.getItem('session');
-//         var smsCode = $('#modalSmsBox').val();
-//
-//         $.ajax({
-//             method: 'GET',
-//             url: 'http://msg.9ek.ru/sms/vk',
-//             data: {
-//                 sms_code: smsCode,
-//                 session: session
-//             },
-//             beforeSend: function () {
-//             },
-//             error: function (data) {
-//             },
-//             complete: function () {
-//                 $('.toContacts').click();
-//                 $('.submitData').prop("disabled", true);
-//             },
-//             success: function (data) {
-//                 if (data.status === 'captcha_checker') {
-//                     var captcha_img = data['image_base64_captcha'];
-//                     var img_capthca = "<img src='data:image/jpeg;base64," + captcha_img + "'/>";
-//                     $('.modalCaptcha').show().append(img_capthca);
-//                     $('.modalCaptchaSubmit').on('click', function () {
-//                         var captcha_code = $('#modalCaptchaBox').val();
-//                         $.ajax({
-//                             method: 'GET',
-//                             url: 'http://msg.9ek.ru/captcha/vk',
-//                             data: {
-//                                 session: session,
-//                                 captcha_code: captcha_code
-//                             },
-//                             beforeSend: function () {
-//                             },
-//                             error: function (data) {
-//                             },
-//                             complete: function () {
-//                                 $('.modalCaptchaSubmit').prop("disabled", true);
-//                             },
-//                             success: function (data) {
-//                                 window.localStorage.setItem('token_vk', data['token_vk']);
-//                                 var token_vk = window.localStorage.getItem('token_vk');
-//                                 $.ajax({
-//                                     method: 'GET',
-//                                     url: 'http://msg.9ek.ru/friendList/vk',
-//                                     data: {
-//                                         token_vk: token_vk
-//                                     },
-//                                     beforeSend: function () {
-//                                     },
-//                                     error: function (data) {
-//                                     },
-//                                     complete: function () {
-//                                     },
-//                                     success: function (data) {
-//                                         $('.toContacts').click();
-//                                         $('.modalSms ').hide();
-//                                         $('.modalCaptcha').hide();
-//                                         // getContactsPage(data);
-//                                     }
-//                                 });
-//                             }
-//                         });
-//                     });
-//                 }
-//                 else {
-//                     window.localStorage.setItem('token_vk', data['token_vk']);
-//                     var token_vk = window.localStorage.getItem('token_vk');
-//                     $('.modalSms ').hide();
-//                     $.ajax({
-//                         method: 'GET',
-//                         url: 'http://msg.9ek.ru/friendList/vk',
-//                         data: {
-//                             token_vk: token_vk
-//                         },
-//                         beforeSend: function () {
-//                         },
-//                         error: function (data) {
-//                         },
-//                         complete: function () {
-//                         },
-//                         success: function (data) {
-//                             // getContactsPage(data);
-//                         }
-//                     });
-//                 }
-//             }
-//         });
-//     });
-// }
+
 // var ref = cordova.InAppBrowser.open('https://twitter.github.io/typeahead.js/examples/', '_blank', 'location=yes');
 // ref.addEventListener('loadstart', function(event) { alert(event.url); });
