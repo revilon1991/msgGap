@@ -96,9 +96,7 @@ class Authorization {
         });
 
         ajaxAuthorization.handler(function (data) {
-            let result = JSON.stringify(data);
-
-            switch (result.status) {
+            switch (data.status) {
                 case 'success':
                     console.log('Токен в порядке');
                     break;
