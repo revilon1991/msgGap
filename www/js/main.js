@@ -21,12 +21,7 @@ jQuery(function ($) {
         $('.dialogsPage').show();
     });
     // 1) Залогинивание
-
-    let ajax = new Ajax('http://msg.9ek.ru/login/vk');
-    // let ajax = new Ajax('http://msg.9ek.ru/login/vk');
-    let sms_checker = new Sms();
-    let captcha = new Captcha();
-
+    let authorization = new Authorization();
 
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
@@ -39,45 +34,18 @@ jQuery(function ($) {
     $('.submitData').on('click', function () {
         let login = $('#vk_login').val();
         let password = $('#vk_password').val();
-        if (login !== '' && password !== '') {
-            ajax.setData({
-                // login: 'revil-on@mail.ru',
-                // password: 'utihot62',
-                login: login,
-                password: password,
-                uuid: '9813908',
-            });
-            ajax.handler(function (data) {
-                console.log(data);
-                window.localStorage.setItem('session', data['session']);
-                window.localStorage.setItem('token_vk', data['token_vk']);
-                let status_checker = data['status'];
-                if (status_checker === 'sms_checker') {
-                    $('.modalSms').show();
-                }
-                else if (status_checker === 'success') {
-                    let token_vk = window.localStorage.getItem('token_vk');
-                    d(token_vk);
-                    $('.toContacts').click();
-                    let friendList = new FriendList(token_vk);
-                    friendList.build();
-                    // getLongPollServerForMessages(token_vk);
-
-                }
-            });
-        }
+        // authorization.processLogin('revil-on@mail.ru', 'utihot62');
+        authorization.processLogin(login, password);
     });
+
     $('.modalSmsSubmit').on('click', function () {
-        let session = window.localStorage.getItem('session');
-        let sms_code = $('#modalSmsBox').val();
-        sms_checker.build(session, sms_code);
+        let smsCode = $('#modalSmsBox').val();
+        authorization.processSms(smsCode);
     });
-
 
     $('.modalCaptchaSubmit').on('click', function () {
-        let session = window.localStorage.getItem('session');
-        let captcha_code = $('#modalCaptchaBox').val();
-        captcha.build(session, captcha_code);
+        let captchaCode = $('#modalCaptchaBox').val();
+        authorization.processCaptcha(captchaCode);
     });
 
     // 2) получение списка друзей
@@ -89,6 +57,11 @@ jQuery(function ($) {
     // // Получение информации о пользователе
     // let userInfo = new UserInfo(staticToken);
     // userInfo.take('12143704');
+
+    // Проверка токена при возобновлении работы приложения
+    document.addEventListener("resume", function () {
+        authorization.checkToken();
+    });
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
