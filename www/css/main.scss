@@ -1,3 +1,5 @@
+$userFishPhoto: 'http://океанариумказань.рф/upload/iblock/def/deffbb22b0d89a8ab0d49f0f8f2dd3dd.jpg';
+
 .authorize {
   display: inline-block;
 }
@@ -75,5 +77,45 @@
   .sendMessage {
     font-size: 26px;
     margin-left: 13px;
+  }
+}
+
+.dialogsPage {
+  display: none;
+  .dialogList {
+    .dialogWrapper {
+      width: 300px;
+      height: auto;
+      padding-bottom: 15px;
+      .photoWrapper {
+        width: 20%;
+        height: auto;
+        display: inline-block;
+        .photo {
+          border-radius: 100px;
+          border: 0 solid #fff;
+          box-shadow: 0 0 7px #666;
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          background: url($userFishPhoto) no-repeat center center;
+          background-size: cover;
+        }
+      }
+      .textWrapper {
+        width: 80%;
+        height: auto;
+        display: inline-block;
+        vertical-align: top;
+        padding-left: 20px;
+        .userName {
+          font-weight: bold;
+        }
+        .date {
+          font-style: italic;
+          color: #585858;
+        }
+      }
+    }
   }
 }

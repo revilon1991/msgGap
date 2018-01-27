@@ -1,8 +1,11 @@
 class UserInfo {
-    constructor(token_vk) {
-        this.ajaxUserInfo = new Ajax('https://api.vk.com/method/users.get');
-        this.ajaxUserInfo.setData({
-            access_token: token_vk
+    constructor() {
+        this.ajaxUserInfo = new Ajax('https://api.vk.com/method/users.get', {
+            eventName: 'ajaxUserInfo',
+            data: {
+                version: '5.69',
+                access_token: window.localStorage.getItem('token_vk')
+            }
         });
     }
 
@@ -45,8 +48,6 @@ class UserInfo {
 
         this.ajaxUserInfo.handler(function (data) {
             new ErrorHandler(data).read();
-
-            d(data);
         });
     }
 }

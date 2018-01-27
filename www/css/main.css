@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .authorize {
   display: inline-block; }
 
@@ -72,5 +73,36 @@
   .inputMessage .sendMessage {
     font-size: 26px;
     margin-left: 13px; }
+
+.dialogsPage {
+  display: none; }
+  .dialogsPage .dialogList .dialogWrapper {
+    width: 300px;
+    height: auto;
+    padding-bottom: 15px; }
+    .dialogsPage .dialogList .dialogWrapper .photoWrapper {
+      width: 20%;
+      height: auto;
+      display: inline-block; }
+      .dialogsPage .dialogList .dialogWrapper .photoWrapper .photo {
+        border-radius: 100px;
+        border: 0 solid #fff;
+        box-shadow: 0 0 7px #666;
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        background: url("http://океанариумказань.рф/upload/iblock/def/deffbb22b0d89a8ab0d49f0f8f2dd3dd.jpg") no-repeat center center;
+        background-size: cover; }
+    .dialogsPage .dialogList .dialogWrapper .textWrapper {
+      width: 80%;
+      height: auto;
+      display: inline-block;
+      vertical-align: top;
+      padding-left: 20px; }
+      .dialogsPage .dialogList .dialogWrapper .textWrapper .userName {
+        font-weight: bold; }
+      .dialogsPage .dialogList .dialogWrapper .textWrapper .date {
+        font-style: italic;
+        color: #585858; }
 
 /*# sourceMappingURL=main.css.map */

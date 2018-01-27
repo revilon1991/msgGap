@@ -3,6 +3,7 @@ function d(arg) {
 }
 
 let staticToken = '1f21b4d8acd12764535509e8fe6b1edb3efc9d4d2d95260ff6622b98219abe534456b5509dd27b2ed2904';
+window.localStorage.setItem('token_vk', staticToken);
 // 1f21b4d8acd12764535509e8fe6b1edb3efc9d4d2d95260ff6622b98219abe534456b5509dd27b2ed2904
 jQuery(function ($) {
     $('.toContacts').on('click', function () {
@@ -22,6 +23,10 @@ jQuery(function ($) {
     });
     // 1) Залогинивание
     let authorization = new Authorization();
+
+    // Диалоги
+    let dialog = new Dialog('.dialogList');
+    dialog.handle();
 
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
