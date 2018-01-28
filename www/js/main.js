@@ -28,14 +28,18 @@ jQuery(function ($) {
     let dialog = new Dialog('.dialogList');
     dialog.handle();
 
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        let element = document.getElementById('deviceProperties');
+    document.addEventListener("deviceready", function() {
+        let device = window.device,
+            element = document.getElementById('deviceProperties');
+
         element.innerHTML =
+            'Device Model: '    + device.model    + '<br />' +
+            'Device Cordova: '  + device.cordova  + '<br />' +
             'Device Platform: ' + device.platform + '<br />' +
-            'Device UUID: ' + device.uuid + '<br />' +
-            'Device Version: ' + device.version + '<br />';
-    }
+            'Device UUID: '     + device.uuid     + '<br />' +
+            'Device Version: '  + device.version  + '<br />';
+    }, false);
+
     $('.submitData').on('click', function () {
         let login = $('#vk_login').val();
         let password = $('#vk_password').val();
