@@ -20,6 +20,7 @@ class SendMessage {
 
             $('.messagesChat').append('<div>' + data.message + '</div>');
             $('.textMessage').val('');
+
         });
     }
 }

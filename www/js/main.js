@@ -7,27 +7,46 @@ window.localStorage.setItem('token_vk', staticToken);
 // 1f21b4d8acd12764535509e8fe6b1edb3efc9d4d2d95260ff6622b98219abe534456b5509dd27b2ed2904
 jQuery(function ($) {
     $('.toContacts').on('click', function () {
+        $('.window').hide();
         $('.contactsPage').show();
-        $('.dialogsPage').hide();
-        $('.loginPage').hide();
+        $('.toContacts').hide();
+        $('.toAuthorize').show();
+        $('.toDialogs').show();
+        $('.chatPage').hide();
+        $('.textWrapper').hide();
+
+        let friendList = new FriendList(staticToken);
+        friendList.build();
     });
     $('.toAuthorize').on('click', function () {
+        $('.window').hide();
         $('.loginPage').show();
-        $('.contactsPage').hide();
-        $('.dialogsPage').hide();
+        $('.toAuthorize').hide();
+        $('.toContacts').show();
+        $('.toDialogs').show();
+        $('.chatPage').hide();
+        $('.dialogList').show();
+        $('.textWrapper').show();
+
     });
     $('.toDialogs').on('click', function () {
-        $('.loginPage').hide();
-        $('.contactsPage').hide();
+        $('.window').hide();
         $('.dialogsPage').show();
+        $('.toDialogs').hide();
+        $('.toContacts').show();
+        $('.toAuthorize').show();
+        $('.chatPage').hide();
+        $('.dialogList').show();
+        $('.textWrapper').show();
+
     });
     // 1) Залогинивание
     let authorization = new Authorization();
-
-    // Диалоги
     let dialog = new Dialog('.dialogList');
+
     dialog.handle();
 
+    // Диалоги
     document.addEventListener("deviceready", function() {
         let device = window.device,
             element = document.getElementById('deviceProperties');
@@ -58,8 +77,7 @@ jQuery(function ($) {
     });
 
     // 2) получение списка друзей
-    // let friendList = new FriendList(staticToken);
-    // friendList.build();
+
     //
     // getLongPoll(staticToken);
     //
@@ -76,31 +94,37 @@ jQuery(function ($) {
 
 
 // Получение истории сообщений
-    $('.contact').on('click', '.contactWrapper', function () {
-        let user = $(this).data('id');
+    $('.window').on('click', '.sendWrapper', function () {
+        $('.messagesChat').html('');
         let clone = $(this).clone();
-        $('.contactsPage').hide();
+        $('.nameChat').html(clone);
+        let user = $(this).data('id-user');
         window.localStorage.setItem(user, user);
-        let id = window.localStorage.getItem(user),
-            token_vk = window.localStorage.getItem('token_vk');
-        $('.chatPage').show();
-        $('.nameChat').append(clone);
+        let token_vk = window.localStorage.getItem('token_vk');
+
+        let collectionHide = $()
+            .add('.dialogList')
+            .add('.contactsPage')
+            .add('.dialogPage')
+            .add('.textWrapper')
+        ;
+        let collectionShow = $()
+            .add('.chatPage')
+        ;
+        collectionHide.hide();
+        collectionShow.show();
 
         let messageHistory = new MessageHistory(staticToken);
-        messageHistory.build(id);
+        messageHistory.build(window.localStorage.getItem(user));
     });
-
 // Отправка сообщения в чат
     $('.sendMessage').on('click', function () {
-        let id = $(this).closest('.chatPage').find('.contactWrapper').data('id');
+        let id_dialog = $(this).closest('.chatPage').find('.sendWrapper').data('id-user');
         let token_vk = window.localStorage.getItem('token_vk'),
             message = $('.textMessage').val();
-
         let sendMessage = new SendMessage(staticToken);
-        // sendMessage.send(id, message);
-        sendMessage.send(id, message);
+        sendMessage.send(id_dialog, message);
     });
-
 
 
 });

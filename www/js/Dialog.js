@@ -44,7 +44,7 @@ class Dialog {
                 date = document.createElement('div')
             ;
 
-            dialogWrapper.className = 'dialogWrapper';
+            dialogWrapper.className = 'dialogWrapper sendWrapper';
             userPhotoWrapper.className = 'photoWrapper';
             textBlockWrapper.className = 'textWrapper';
             userPhoto.className = 'photo';

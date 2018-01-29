@@ -55,35 +55,29 @@
 
 <body>
 <div class="app container">
-    <div class="toDialogs">
-        to dialogs >>>>>
-    </div>
-    <div class="container-fluid dialogsPage">
-        <div class="row-fluid">
-            <div class="col-xs-12">
-                <div class="namePage">
-                    Dialogs
-                </div>
-            </div>
+    <div class="navigate_buttons">
+        <div class="toDialogs">
+            toDialogs>>>>>
         </div>
+        <div class="toContacts">
+            toContacts>>>>>
+        </div>
+        <div class="toAuthorize">
+            toAuthorize>>>>>
+        </div>
+    </div>
+
+    <div class="container-fluid dialogsPage window">
         <div class="row-fluid">
+            <div class="namePage">
+                Dialogs
+            </div>
             <div class="dialogList"></div>
         </div>
     </div>
-
-
-    <div class="container-fluid loginPage">
-
-        <div class="row-fluid">
-            <div class="col-xs-12">
-                <div class="authorize">
-                    Авторизуйтесь
-                </div>
-
-                <div class="toContacts">
-                    I'm an arrow :)
-                </div>
-            </div>
+    <div class="container-fluid loginPage window">
+        <div class="namePage">
+            Authorization
         </div>
         <p id="deviceProperties">Loading device properties</p>
         <div class="row-fluid">
@@ -108,18 +102,11 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid contactsPage">
+    <div class="container-fluid contactsPage window">
         <div class="row-fluid">
-            <div class="col-xs-12">
-                <div class="authorize">
-                    Contacts
-                </div>
-                <div class="toAuthorize">
-                    I'm an arrow :)
-                </div>
+            <div class="namePage">
+                Contacts
             </div>
-        </div>
-        <div class="row-fluid">
             <div class="contact"></div>
         </div>
     </div>

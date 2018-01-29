@@ -28,7 +28,8 @@ function getNewMessages(ts) {
         version: 2
     });
     ajaxGetServerForLongPoll.handler(function (data) {
-        // d(data);
+        d(data);
+
         let res = JSON.parse(data);
         // d(res.ts);
         if (data.failed) {

@@ -1,7 +1,4 @@
 @charset "UTF-8";
-.authorize {
-  display: inline-block; }
-
 .wrapper {
   display: flex;
   align-items: center;
@@ -17,7 +14,7 @@
   display: inline; }
 
 .contactsPage {
-  display: block; }
+  display: none; }
 
 #deviceProperties {
   display: none; }
@@ -32,7 +29,7 @@
   display: block; }
 
 .loginPage {
-  display: none; }
+  display: block; }
 
 .messagesChat {
   flex-direction: column;
@@ -74,17 +71,32 @@
     font-size: 26px;
     margin-left: 13px; }
 
+.navigate_buttons {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row; }
+  .navigate_buttons .toAuthorize {
+    display: none; }
+  .navigate_buttons .toDialogs, .navigate_buttons .toContacts, .navigate_buttons .toAuthorize {
+    border: 1px solid;
+    background-color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    padding: 5px 10px; }
+
 .dialogsPage {
   display: none; }
-  .dialogsPage .dialogList .dialogWrapper {
+  .dialogsPage .dialogList .dialogWrapper.sendWrapper {
     width: 300px;
     height: auto;
     padding-bottom: 15px; }
-    .dialogsPage .dialogList .dialogWrapper .photoWrapper {
+    .dialogsPage .dialogList .dialogWrapper.sendWrapper .photoWrapper {
       width: 20%;
       height: auto;
       display: inline-block; }
-      .dialogsPage .dialogList .dialogWrapper .photoWrapper .photo {
+      .dialogsPage .dialogList .dialogWrapper.sendWrapper .photoWrapper .photo {
         border-radius: 100px;
         border: 0 solid #fff;
         box-shadow: 0 0 7px #666;
@@ -93,15 +105,15 @@
         object-fit: cover;
         background: url("http://океанариумказань.рф/upload/iblock/def/deffbb22b0d89a8ab0d49f0f8f2dd3dd.jpg") no-repeat center center;
         background-size: cover; }
-    .dialogsPage .dialogList .dialogWrapper .textWrapper {
+    .dialogsPage .dialogList .dialogWrapper.sendWrapper .textWrapper {
       width: 80%;
       height: auto;
       display: inline-block;
       vertical-align: top;
       padding-left: 20px; }
-      .dialogsPage .dialogList .dialogWrapper .textWrapper .userName {
+      .dialogsPage .dialogList .dialogWrapper.sendWrapper .textWrapper .userName {
         font-weight: bold; }
-      .dialogsPage .dialogList .dialogWrapper .textWrapper .date {
+      .dialogsPage .dialogList .dialogWrapper.sendWrapper .textWrapper .date {
         font-style: italic;
         color: #585858; }
 

@@ -13,7 +13,7 @@ class FriendList {
             for (let user of data.response.items) {
                 let wrapper =
                     // <HTML>
-                    '<div class="contactWrapper"  data-id="' + user.id +  '">' +
+                    '<div class="contactWrapper sendWrapper"  data-id-user="' + user.id +  '">' +
                         '<div class="user-photo_wrapper">' +
                             '<img class="user-photo" src="'+ user.photo_200_orig + '" alt="'+ user.first_name + '">' +
                         '</div>' +
