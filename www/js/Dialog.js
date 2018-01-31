@@ -37,6 +37,7 @@ class Dialog {
 
             let dialogWrapper = document.createElement('div'),
                 userPhotoWrapper = document.createElement('div'),
+                userTyping = document.createElement('div'),
                 textBlockWrapper = document.createElement('div'),
                 userPhoto = document.createElement('img'),
                 userName = document.createElement('div'),
@@ -51,6 +52,7 @@ class Dialog {
             userName.className = 'userName';
             message.className = 'message';
             date.className = 'date';
+            userTyping.className = 'userTyping';
 
             dialogWrapper.setAttribute('data-id-user', dialog['uid']);
             userPhoto.src = dialog.userInfo['photo_200_orig'];
@@ -65,6 +67,7 @@ class Dialog {
             textBlockWrapper.appendChild(message);
             dialogWrapper.appendChild(userPhotoWrapper);
             dialogWrapper.appendChild(textBlockWrapper);
+            dialogWrapper.appendChild(userTyping);
 
             dialogBlock.appendChild(dialogWrapper);
         }

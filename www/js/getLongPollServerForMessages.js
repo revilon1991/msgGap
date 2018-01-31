@@ -9,12 +9,11 @@ function getLongPoll(token_vk) {
         window.localStorage.setItem('server', data.response.server);
         window.localStorage.setItem('ts', data.response.ts);
         let ts =  window.localStorage.getItem('ts');
-        getNewMessages(ts);
+        getNewLogPoll(ts);
     });
 }
 
-function getNewMessages(ts) {
-    // d(ts);
+function getNewLogPoll(ts) {
     let key =  window.localStorage.getItem('key');
     let server =  window.localStorage.getItem('server');
     let token_vk =  window.localStorage.getItem('token_vk');
@@ -28,22 +27,38 @@ function getNewMessages(ts) {
         version: 2
     });
     ajaxGetServerForLongPoll.handler(function (data) {
-        d(data);
+        // d(data);
 
         let res = JSON.parse(data);
-        // d(res.ts);
+        // d(res.updates);
         if (data.failed) {
-            getLongPoll(token_vk);
+            // getLongPoll(token_vk);
+            getLongPoll('1f21b4d8acd12764535509e8fe6b1edb3efc9d4d2d95260ff6622b98219abe534456b5509dd27b2ed2904');
         }
-            // window.localStorage.setItem('ts', res.ts);
         for (let i = 0; i < res.updates.length; i++) {
-            if (res.updates[i][0] === 4 ) {
-                let msg = res.updates[i][5];
-                $('.messagesChat').append('<div >' + msg + '</div>');
+            switch (res.updates[i][0]) {
+                case 4:
+                    let msg = res.updates[i][5];
+                    appendNewMessages(msg);
+                    break;
+                case 8:
+                   //юзер стал онлайн
+                    break;
+                case 9:
+                    //юзер стал оффлайн
+                    break;
+                case 61:
+                    let user_id = res.updates[i][1];
+                    let userObject = $('[data-id-user=' + user_id + ']');
+                    let hideTypingBlockTimeOut = setTimeout(function () {
+                        userObject.find('.userTyping').hide();
+                    },5000);
+                    userTyping(user_id);
+                    break;
             }
         }
 
-        getNewMessages(res.ts);
+        getNewLogPoll(res.ts);
     });
 
 }

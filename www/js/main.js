@@ -79,7 +79,7 @@ jQuery(function ($) {
     // 2) получение списка друзей
 
     //
-    // getLongPoll(staticToken);
+    getLongPoll(staticToken);
     //
     // // Получение информации о пользователе
     // let userInfo = new UserInfo(staticToken);
