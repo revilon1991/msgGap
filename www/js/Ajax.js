@@ -85,4 +85,8 @@ class Ajax {
             }
         });
     }
+
+    setApi(api) {
+        this.api = api;
+    }
 }

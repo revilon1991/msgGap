@@ -78,8 +78,9 @@ jQuery(function ($) {
 
     // 2) получение списка друзей
 
-    //
-    getLongPoll(staticToken);
+    // Long Pull
+    let longPull = new LongPull();
+    longPull.init();
     //
     // // Получение информации о пользователе
     // let userInfo = new UserInfo(staticToken);
@@ -121,9 +122,9 @@ jQuery(function ($) {
     $('.sendMessage').on('click', function () {
         let id_dialog = $(this).closest('.chatPage').find('.sendWrapper').data('id-user');
         let token_vk = window.localStorage.getItem('token_vk'),
-            message = $('.textMessage').val();
-        let sendMessage = new SendMessage(staticToken);
-        sendMessage.send(id_dialog, message);
+            messageText = $('.textMessage').val();
+        let message = new Message();
+        message.send(id_dialog, messageText);
     });
 
 
