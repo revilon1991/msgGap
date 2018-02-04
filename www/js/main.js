@@ -2,52 +2,65 @@ function d(arg) {
     console.log(arg);
 }
 
-let staticToken = '1f21b4d8acd12764535509e8fe6b1edb3efc9d4d2d95260ff6622b98219abe534456b5509dd27b2ed2904';
-window.localStorage.setItem('token_vk', staticToken);
-// 1f21b4d8acd12764535509e8fe6b1edb3efc9d4d2d95260ff6622b98219abe534456b5509dd27b2ed2904
+// let staticToken = 'e261e944e9df62f776f7f8240fd5fe4bfa17f601f64f3563f27a77f0ba5a099e3c21d0e0d75987dc0bfdf';
+window.localStorage.setItem('token_vk', 'noToken');
+// window.localStorage.setItem('token_vk', staticToken);
+
 jQuery(function ($) {
     $('.toContacts').on('click', function () {
         $('.window').hide();
         $('.contactsPage').show();
         $('.toContacts').hide();
-        $('.toAuthorize').show();
+        // $('.toAuthorize').show();
         $('.toDialogs').show();
         $('.chatPage').hide();
         $('.textWrapper').hide();
 
-        let friendList = new FriendList(staticToken);
-        friendList.build();
     });
-    $('.toAuthorize').on('click', function () {
-        $('.window').hide();
-        $('.loginPage').show();
-        $('.toAuthorize').hide();
-        $('.toContacts').show();
-        $('.toDialogs').show();
-        $('.chatPage').hide();
-        $('.dialogList').show();
-        $('.textWrapper').show();
+    // $('.toAuthorize').on('click', function () {
+    //     $('.window').hide();
+    //     $('.loginPage').show();
+    //     $('.toAuthorize').hide();
+    //     $('.toContacts').show();
+    //     $('.toDialogs').show();
+    //     $('.chatPage').hide();
+    //     $('.dialogList').show();
+    //     $('.textWrapper').show();
+    // });
 
-    });
     $('.toDialogs').on('click', function () {
         $('.window').hide();
         $('.dialogsPage').show();
         $('.toDialogs').hide();
         $('.toContacts').show();
-        $('.toAuthorize').show();
+        // $('.toAuthorize').show();
         $('.chatPage').hide();
         $('.dialogList').show();
         $('.textWrapper').show();
 
     });
-    // 1) Залогинивание
+    // 1)
     let authorization = new Authorization();
-    let dialog = new Dialog('.dialogList');
 
-    dialog.handle();
+
+
+
+    // Long Pull
+    let longPull = new LongPull(window.localStorage.getItem('token_vk'));
+    longPull.init();
+
+    // // Получение информации о пользователе
+    // let userInfo = new UserInfo(staticToken);
+    // userInfo.take('12143704');
+
+    // Проверка токена при возобновлении работы приложения
+    document.addEventListener("resume", function () {
+        authorization.checkToken();
+    });
 
     // Диалоги
-    document.addEventListener("deviceready", function() {
+    document.addEventListener("deviceready", function () {
+        authorization.checkToken();
         let device = window.device,
             element = document.getElementById('deviceProperties');
 
@@ -76,26 +89,11 @@ jQuery(function ($) {
         authorization.processCaptcha(captchaCode);
     });
 
-    // 2) получение списка друзей
-
-    // Long Pull
-    let longPull = new LongPull();
-    longPull.init();
-    //
-    // // Получение информации о пользователе
-    // let userInfo = new UserInfo(staticToken);
-    // userInfo.take('12143704');
-
-    // Проверка токена при возобновлении работы приложения
-    document.addEventListener("resume", function () {
-        authorization.checkToken();
-    });
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 // Получение истории сообщений
     $('.window').on('click', '.sendWrapper', function () {
+        $('.toDialogs').show();
+        $('.toContacts').show();
+
         $('.messagesChat').html('');
         let clone = $(this).clone();
         $('.nameChat').html(clone);
@@ -115,21 +113,20 @@ jQuery(function ($) {
         collectionHide.hide();
         collectionShow.show();
 
-        let messageHistory = new MessageHistory(staticToken);
+        // let messageHistory = new MessageHistory(staticToken);
+        let messageHistory = new MessageHistory(token_vk);
         messageHistory.build(window.localStorage.getItem(user));
     });
 // Отправка сообщения в чат
     $('.sendMessage').on('click', function () {
         let id_dialog = $(this).closest('.chatPage').find('.sendWrapper').data('id-user');
-        let token_vk = window.localStorage.getItem('token_vk'),
-            messageText = $('.textMessage').val();
+        // let token_vk = window.localStorage.getItem('token_vk'),
+        let messageText = $('.textMessage').val();
         let message = new Message();
         message.send(id_dialog, messageText);
     });
 
-
 });
-
 
 
 // var ref = cordova.InAppBrowser.open('https://twitter.github.io/typeahead.js/examples/', '_blank', 'location=yes');

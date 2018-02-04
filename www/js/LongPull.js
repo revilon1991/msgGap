@@ -1,5 +1,6 @@
 class LongPull {
-    constructor() {
+    constructor(token) {
+        this.token  = token;
         this.key = null;
         this.server = null;
         this.ts = null;
@@ -8,14 +9,16 @@ class LongPull {
             eventName: 'ajaxLongPullServer',
             data: {
                 version: '5.69',
-                access_token: window.localStorage.getItem('token_vk')
+                // access_token: window.localStorage.getItem('token_vk')
+                access_token:  this.token
             }
         });
 
         this.ajaxLongPull = new Ajax(null, {
             eventName: 'ajaxLongPull',
             data: {
-                access_token: window.localStorage.getItem('token_vk'),
+                // access_token: window.localStorage.getItem('token_vk'),
+                access_token:  this.token,
                 act: 'a_check',
                 wait: 5,
                 mode: 8,
@@ -47,7 +50,7 @@ class LongPull {
         }, false);
 
         document.addEventListener(this.ajaxLongPull.event.type, function (e) {
-            let response = JSON.parse(e.detail.response);
+            let response = e.detail.response;
 
             if (e.detail.response.failed) {
                 this.ajaxLongPullServer.handler();
@@ -80,11 +83,22 @@ class LongPull {
      * @param response
      */
     handle(response) {
+        // d(response['updates']);
         for (let i = 0; i < response['updates']['length']; i++) {
+
             switch (response['updates'][i][0]) {
-                case 4: // Новое сообщение
-                    let msg = response['updates'][i][5];
-                    Message.appendNewMessages(msg);
+                case 4: // отправка сообщение
+                    let indexMessage = response['updates'][i][2];
+                    if (indexMessage === 49 || indexMessage === 35) {
+                        let msg = response['updates'][i][5];
+                        Message.appendNewMessages(msg, indexMessage);
+                    }
+                    break;
+                case 6: // Прочтение всех входящих сообщений
+                    break;
+                case 7:  // Прочтение всех исходящих сообщений
+                    let checkOut = response['updates'][i];
+                    // d(checkOut);
                     break;
                 case 8: // Юзер стал онлайн
                     break;

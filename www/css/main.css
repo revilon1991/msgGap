@@ -25,11 +25,8 @@
   border-radius: 45px;
   background-position: center; }
 
-.searchContacts {
-  display: block; }
-
 .loginPage {
-  display: block; }
+  display: none; }
 
 .messagesChat {
   flex-direction: column;
@@ -40,13 +37,13 @@
   display: flex;
   width: 100%;
   background-color: #fff; }
-  .messagesChat .receivedMessage0 {
+  .messagesChat .receivedMessage {
     align-self: flex-start;
     display: block;
     margin: 5px;
     border: 1px solid green;
     border-radius: 45px; }
-  .messagesChat .receivedMessage1 {
+  .messagesChat .sentMessage {
     align-self: flex-end;
     display: block;
     margin: 5px;
@@ -60,7 +57,7 @@
 .contactId {
   display: none; }
 
-.modalSms {
+.modalSms, .modalCaptcha {
   background-color: #9fcdff; }
 
 .inputMessage {
@@ -88,33 +85,37 @@
 
 .dialogsPage {
   display: none; }
-  .dialogsPage .dialogList .dialogWrapper.sendWrapper {
-    width: 300px;
+
+.sendWrapper {
+  width: 300px;
+  height: auto;
+  padding-bottom: 15px; }
+  .sendWrapper .photoWrapper {
+    width: 20%;
     height: auto;
-    padding-bottom: 15px; }
-    .dialogsPage .dialogList .dialogWrapper.sendWrapper .photoWrapper {
-      width: 20%;
-      height: auto;
-      display: inline-block; }
-      .dialogsPage .dialogList .dialogWrapper.sendWrapper .photoWrapper .photo {
-        border-radius: 100px;
-        border: 0 solid #fff;
-        box-shadow: 0 0 7px #666;
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        background: url("http://океанариумказань.рф/upload/iblock/def/deffbb22b0d89a8ab0d49f0f8f2dd3dd.jpg") no-repeat center center;
-        background-size: cover; }
-    .dialogsPage .dialogList .dialogWrapper.sendWrapper .textWrapper {
-      width: 80%;
-      height: auto;
-      display: inline-block;
-      vertical-align: top;
-      padding-left: 20px; }
-      .dialogsPage .dialogList .dialogWrapper.sendWrapper .textWrapper .userName {
-        font-weight: bold; }
-      .dialogsPage .dialogList .dialogWrapper.sendWrapper .textWrapper .date {
-        font-style: italic;
-        color: #585858; }
+    display: inline-block; }
+    .sendWrapper .photoWrapper .photo {
+      border-radius: 100px;
+      border: 0 solid #fff;
+      box-shadow: 0 0 7px #666;
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      background: url("http://океанариумказань.рф/upload/iblock/def/deffbb22b0d89a8ab0d49f0f8f2dd3dd.jpg") no-repeat center center;
+      background-size: cover; }
+  .sendWrapper .textWrapper {
+    width: 80%;
+    height: auto;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 20px; }
+    .sendWrapper .textWrapper .userName {
+      font-weight: bold; }
+    .sendWrapper .textWrapper .date {
+      font-style: italic;
+      color: #585858; }
+
+.chatPage {
+  display: none; }
 
 /*# sourceMappingURL=main.css.map */

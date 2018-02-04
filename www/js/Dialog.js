@@ -55,12 +55,13 @@ class Dialog {
             userTyping.className = 'userTyping';
 
             dialogWrapper.setAttribute('data-id-user', dialog['uid']);
-            userPhoto.src = dialog.userInfo['photo_200_orig'];
-            userName.innerHTML = dialog.userInfo['first_name'] + ' ' + dialog.userInfo['last_name'];
+            if ('userInfo' in dialog) {
+                userPhoto.src = dialog.userInfo['photo_200_orig'];
+                userName.innerHTML = dialog.userInfo['first_name'] + ' ' + dialog.userInfo['last_name'];
+            }
             message.innerHTML = dialog.body;
             let dateMessage = new Date(dialog.date * 1000);
             date.innerHTML = dateMessage.toLocaleString();
-
             userPhotoWrapper.appendChild(userPhoto);
             textBlockWrapper.appendChild(userName);
             textBlockWrapper.appendChild(date);
@@ -68,7 +69,6 @@ class Dialog {
             dialogWrapper.appendChild(userPhotoWrapper);
             dialogWrapper.appendChild(textBlockWrapper);
             dialogWrapper.appendChild(userTyping);
-
             dialogBlock.appendChild(dialogWrapper);
         }
     }
@@ -108,7 +108,8 @@ class Dialog {
     static hydrationData(responseDialog, responseUserInfo) {
         let dialogList = responseDialog.response;
         let userInfoList = responseUserInfo.response;
-
+d(dialogList);
+d(userInfoList);
         for (let i = 0; i < dialogList.length; i++) {
             if (!(dialogList[i] instanceof Object)) {
                 continue;

@@ -13,10 +13,16 @@ class MessageHistory {
 
         this.ajaxMessageHistory.handler(function (data) {
             new ErrorHandler(data).read();
-
             for (let i = 1; i < data.response.length; i++) {
+                let out = data.response[i]['out'];
+                let formatMessage;
+                out === 0 ?  formatMessage = 'receivedMessage' : formatMessage = 'sentMessage';
                 let msg = data.response[i].body;
-                $('.messagesChat').prepend('<div >' + msg + '</div>');
+                let messagesChat = $('.messagesChat');
+
+                messagesChat.prepend('<div class="' + formatMessage + '">' + msg + '</div>');
+                let height = messagesChat[0].scrollHeight;
+                messagesChat.scrollTop(height);
             }
         });
     }

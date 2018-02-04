@@ -14,8 +14,8 @@ class FriendList {
                 let wrapper =
                     // <HTML>
                     '<div class="contactWrapper sendWrapper"  data-id-user="' + user.id +  '">' +
-                        '<div class="user-photo_wrapper">' +
-                            '<img class="user-photo" src="'+ user.photo_200_orig + '" alt="'+ user.first_name + '">' +
+                        '<div class="photoWrapper">' +
+                            '<img class="photo" src="'+ user.photo_200_orig + '" alt="'+ user.first_name + '">' +
                         '</div>' +
                         '<div class="user-info">' +
                             '<div class="user-first_name">' + user.first_name + '</div>' +

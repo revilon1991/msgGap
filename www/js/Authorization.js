@@ -69,13 +69,22 @@ class Authorization {
 
             case 'captcha_checker':
                 let imgCaptchca = "<img src='data:image/jpeg;base64," + this.imageBase64Captcha + "'/>";
+                $('.modalSms').hide();
                 $('.modalCaptcha').show().append(imgCaptchca);
                 break;
 
             case 'success':
                 window.localStorage.setItem('token_vk', this.token);
+                $('.modalCaptcha').hide();
+                $('.modalSms').hide();
                 let friendList = new FriendList(this.token);
                 friendList.build();
+                let dialog = new Dialog('.dialogList');
+                dialog.handle();
+                $('.window').hide();
+                $('.dialogsPage').show();
+                $('.toContacts').show();
+                $('.toDialogs').show();
                 break;
         }
 
@@ -98,11 +107,26 @@ class Authorization {
         ajaxAuthorization.handler(function (data) {
             switch (data.status) {
                 case 'success':
-                    console.log('Токен в порядке');
+                    d('Токен в порядке');
+                    let dialog = new Dialog('.dialogList');
+                    dialog.handle();
+                    // let friendList = new FriendList(staticToken);
+                    let friendList = new FriendList(token_vk);
+                    friendList.build();
+                    $('.window').hide();
+                    $('.dialogsPage').show();
+                    $('.toContacts').show();
+                    $('.toDialogs').show();
                     break;
+
                 case 'error':
-                    alert('Токен протух');
-                    console.error(result.description);
+                    d('Токен протух');
+                    $('.window').hide();
+                    $('.toContacts').hide();
+                    $('.toDialogs').hide();
+                    $('.loginPage').show();
+                    console.error(data.description);
+                    break;
             }
         });
     }

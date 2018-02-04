@@ -1,23 +1,21 @@
 class Message {
     constructor() {
-        this.ajaxSendMessage = new Ajax('http://msg.9ek.ru/send/vk');
+        this.ajaxSendMessage = new Ajax('https://api.vk.com/method/messages.send');
         this.ajaxSendMessage.setData({
-            access_token: window.localStorage.getItem('token_vk')
+            access_token: window.localStorage.getItem('token_vk'),
+            version: '5.69',
         });
-
         this.hideTypingBlockTimeOut = null;
     }
 
     send(id, message) {
         this.ajaxSendMessage.addData({
-            user_to: id,
+            user_id: id,
             message: message
         });
 
         this.ajaxSendMessage.handler(function (data) {
             new ErrorHandler(data).read();
-
-            $('.messagesChat').append('<div>' + data.message + '</div>');
             $('.textMessage').val('');
 
         });
@@ -35,7 +33,20 @@ class Message {
         }, false);
     }
 
-    static appendNewMessages(msg) {
-        $('.messagesChat').append('<div >' + msg + '</div>');
+    static appendNewMessages(msg,index) {
+        let formatMessage;
+        if (index === 35) {
+            formatMessage = 'sentMessage';
+        } else if (index === 49) {
+            formatMessage = 'receivedMessage';
+        }
+        let messagesChat = $('.messagesChat');
+        messagesChat.append('<div class="'+ formatMessage +'">' + msg + '</div>');
+        let height = messagesChat[0].scrollHeight;
+        messagesChat.scrollTop(height);
+    }
+
+    markAsReadOutMessages() {
+
     }
 }
