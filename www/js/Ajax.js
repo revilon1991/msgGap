@@ -45,6 +45,14 @@ class Ajax {
         });
     }
 
+    preloader(callable) {
+        return callable;
+    }
+
+    postloader(callable) {
+        return callable;
+    }
+
     /**
      * Метод для множественной обработки данных с помощью массива анонимных функций
      * Для корректной обработки в каждой функции необходимо вернуть значение первого аргумента
@@ -71,18 +79,14 @@ class Ajax {
             method: this.method,
             url: this.api,
             data: this.data,
-            beforeSend: function () {
-             // $('.submitData').prop('disabled', true);
-            },
+            beforeSend: this.preloader,
             success: function (data) {
 
             },
             error: function (data) {
                 console.error(data);
             },
-            complete: function () {
-
-            }
+            complete: this.postloader
         });
     }
 

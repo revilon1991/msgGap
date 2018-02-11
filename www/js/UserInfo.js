@@ -1,7 +1,7 @@
 class UserInfo {
-    constructor() {
+    constructor(action) {
         this.ajaxUserInfo = new Ajax('https://api.vk.com/method/users.get', {
-            eventName: 'ajaxUserInfo',
+            eventName: 'ajaxUserInfo.' + action,
             data: {
                 version: '5.69',
                 access_token: window.localStorage.getItem('token_vk')

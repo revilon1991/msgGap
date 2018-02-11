@@ -1,6 +1,5 @@
 class LongPull {
-    constructor(token) {
-        this.token  = token;
+    constructor() {
         this.key = null;
         this.server = null;
         this.ts = null;
@@ -9,16 +8,14 @@ class LongPull {
             eventName: 'ajaxLongPullServer',
             data: {
                 version: '5.69',
-                // access_token: window.localStorage.getItem('token_vk')
-                access_token:  this.token
+                access_token: window.localStorage.getItem('token_vk')
             }
         });
 
         this.ajaxLongPull = new Ajax(null, {
             eventName: 'ajaxLongPull',
             data: {
-                // access_token: window.localStorage.getItem('token_vk'),
-                access_token:  this.token,
+                access_token: window.localStorage.getItem('token_vk'),
                 act: 'a_check',
                 wait: 5,
                 mode: 8,

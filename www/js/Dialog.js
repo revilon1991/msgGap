@@ -42,16 +42,19 @@ class Dialog {
                 userPhoto = document.createElement('img'),
                 userName = document.createElement('div'),
                 message = document.createElement('div'),
-                date = document.createElement('div')
+                date = document.createElement('div'),
+                userInformation = document.createElement('div')
             ;
 
             dialogWrapper.className = 'dialogWrapper sendWrapper';
             userPhotoWrapper.className = 'photoWrapper';
             textBlockWrapper.className = 'textWrapper';
             userPhoto.className = 'photo';
+            userInformation.className = 'information';
             userName.className = 'userName';
-            message.className = 'message';
             date.className = 'date';
+
+            message.className = 'message';
             userTyping.className = 'userTyping';
 
             dialogWrapper.setAttribute('data-id-user', dialog['uid']);
@@ -59,12 +62,30 @@ class Dialog {
                 userPhoto.src = dialog.userInfo['photo_200_orig'];
                 userName.innerHTML = dialog.userInfo['first_name'] + ' ' + dialog.userInfo['last_name'];
             }
-            message.innerHTML = dialog.body;
+            let slicedMessage = dialog.body.replace(/<br>/gi, ' ').slice(0,60);
+            if (slicedMessage.length < dialog.body.length) {
+                slicedMessage += '...';
+            }
+            message.innerHTML = slicedMessage;
             let dateMessage = new Date(dialog.date * 1000);
-            date.innerHTML = dateMessage.toLocaleString();
+            let getHours = dateMessage.getHours();
+            let getMinutes= dateMessage.getMinutes();
+            let dateMessageWithoutTime =  window.moment(dateMessage).format('DD.MM.YYYY');
+            let now = new Date();
+            let today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).valueOf();
+            let other = new Date(dialog.date * 1000);
+            if (other < today - 86400000) {
+                other = dateMessageWithoutTime;
+            } else if (other < today) {
+                other = 'вчера';
+            } else {
+               other = getHours + ':' + getMinutes;
+            }
+            date.innerHTML = other;
             userPhotoWrapper.appendChild(userPhoto);
-            textBlockWrapper.appendChild(userName);
-            textBlockWrapper.appendChild(date);
+            textBlockWrapper.appendChild(userInformation);
+            userInformation.appendChild(userName);
+            userInformation.appendChild(date);
             textBlockWrapper.appendChild(message);
             dialogWrapper.appendChild(userPhotoWrapper);
             dialogWrapper.appendChild(textBlockWrapper);
@@ -79,7 +100,7 @@ class Dialog {
     handleEventSystem() {
         let self = this;
         let ajaxDialog = this.ajaxDialog;
-        let userInfo = new UserInfo();
+        let userInfo = new UserInfo('dialog');
 
         document.addEventListener(this.ajaxDialog.event.type, function (e) {
             let dialogList = e.detail.response.response;
@@ -91,7 +112,6 @@ class Dialog {
 
             userInfo.take(userIdList);
         }, false);
-
         document.addEventListener(userInfo.ajaxUserInfo.event.type, function (e) {
             self.dialogList = Dialog.hydrationData(ajaxDialog.response, e.detail.response);
             self.renderHtml(self.dialogBlock)
@@ -108,8 +128,6 @@ class Dialog {
     static hydrationData(responseDialog, responseUserInfo) {
         let dialogList = responseDialog.response;
         let userInfoList = responseUserInfo.response;
-d(dialogList);
-d(userInfoList);
         for (let i = 0; i < dialogList.length; i++) {
             if (!(dialogList[i] instanceof Object)) {
                 continue;

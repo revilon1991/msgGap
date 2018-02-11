@@ -2,9 +2,10 @@ function d(arg) {
     console.log(arg);
 }
 
-// let staticToken = 'e261e944e9df62f776f7f8240fd5fe4bfa17f601f64f3563f27a77f0ba5a099e3c21d0e0d75987dc0bfdf';
-window.localStorage.setItem('token_vk', 'noToken');
-// window.localStorage.setItem('token_vk', staticToken);
+let staticToken = 'e82a9109150f70295d08aa668bfe794b4e8f36d18b57e7311064a5646b150c231beec3c76404f41e9f33a';
+// window.localStorage.setItem('token_vk', 'noToken');
+window.localStorage.setItem('token_vk', staticToken);
+
 
 jQuery(function ($) {
     $('.toContacts').on('click', function () {
@@ -14,7 +15,7 @@ jQuery(function ($) {
         // $('.toAuthorize').show();
         $('.toDialogs').show();
         $('.chatPage').hide();
-        $('.textWrapper').hide();
+        // $('.textWrapper').hide();
 
     });
     // $('.toAuthorize').on('click', function () {
@@ -36,17 +37,21 @@ jQuery(function ($) {
         // $('.toAuthorize').show();
         $('.chatPage').hide();
         $('.dialogList').show();
-        $('.textWrapper').show();
+        // $('.textWrapper').show();
 
     });
     // 1)
     let authorization = new Authorization();
+    let dialog = new Dialog('.dialogList');
+    let friendList = new FriendList('.contact');
+
+
 
 
 
 
     // Long Pull
-    let longPull = new LongPull(window.localStorage.getItem('token_vk'));
+    let longPull = new LongPull();
     longPull.init();
 
     // // Получение информации о пользователе
@@ -54,8 +59,28 @@ jQuery(function ($) {
     // userInfo.take('12143704');
 
     // Проверка токена при возобновлении работы приложения
-    document.addEventListener("resume", function () {
-        authorization.checkToken();
+    document.addEventListener('resume', function () {
+        let ajaxCheckToken = authorization.checkToken();
+        ajaxCheckToken.handler(function (data) {
+            switch (data.status) {
+                case 'success':
+                    d('Токен в порядке');
+                    dialog.handle();
+                    friendList.handle();
+                    $('.window').hide();
+                    $('.dialogsPage').show();
+                    $('.toContacts').show();
+                    $('.toDialogs').show();
+                    break;
+                case 'error':
+                    d('Токен протух');
+                    $('.window').hide();
+                    $('.toContacts').hide();
+                    $('.toDialogs').hide();
+                    $('.loginPage').show();
+                    break;
+            }
+        });
     });
 
     // Диалоги
@@ -63,7 +88,6 @@ jQuery(function ($) {
         authorization.checkToken();
         let device = window.device,
             element = document.getElementById('deviceProperties');
-
         element.innerHTML =
             'Device Model: '    + device.model    + '<br />' +
             'Device Cordova: '  + device.cordova  + '<br />' +
@@ -73,10 +97,10 @@ jQuery(function ($) {
     }, false);
 
     $('.submitData').on('click', function () {
-        let login = $('#vk_login').val();
-        let password = $('#vk_password').val();
-        // authorization.processLogin('revil-on@mail.ru', 'utihot62');
-        authorization.processLogin(login, password);
+        // let login = $('#vk_login').val();
+        // let password = $('#vk_password').val();
+        authorization.processLogin('revil-on@mail.ru', 'utihot62');
+        // authorization.processLogin(login, password);
     });
 
     $('.modalSmsSubmit').on('click', function () {
@@ -88,6 +112,7 @@ jQuery(function ($) {
         let captchaCode = $('#modalCaptchaBox').val();
         authorization.processCaptcha(captchaCode);
     });
+
 
 // Получение истории сообщений
     $('.window').on('click', '.sendWrapper', function () {
@@ -113,8 +138,8 @@ jQuery(function ($) {
         collectionHide.hide();
         collectionShow.show();
 
-        // let messageHistory = new MessageHistory(staticToken);
-        let messageHistory = new MessageHistory(token_vk);
+        let messageHistory = new MessageHistory(staticToken);
+        // let messageHistory = new MessageHistory(token_vk);
         messageHistory.build(window.localStorage.getItem(user));
     });
 // Отправка сообщения в чат

@@ -23,7 +23,7 @@ class Message {
 
     userTyping(user_id) {
         let userObject = $('[data-id-user=' + user_id + ']');
-        let userInfo = new UserInfo();
+        let userInfo = new UserInfo('message');
         userInfo.take(user_id);
 
 

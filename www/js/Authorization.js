@@ -77,8 +77,8 @@ class Authorization {
                 window.localStorage.setItem('token_vk', this.token);
                 $('.modalCaptcha').hide();
                 $('.modalSms').hide();
-                let friendList = new FriendList(this.token);
-                friendList.build();
+                let friendList = new FriendList('.contact');
+                friendList.handle();
                 let dialog = new Dialog('.dialogList');
                 dialog.handle();
                 $('.window').hide();
@@ -92,41 +92,10 @@ class Authorization {
     }
 
     checkToken() {
-        let token_vk = window.localStorage.getItem('token_vk');
-
-        if (!token_vk) {
-            return;
-        }
-
-        let ajaxAuthorization = new Ajax('http://msg.9ek.ru/check_token/vk');
-
-        ajaxAuthorization.setData({
-            token_vk: token_vk
-        });
-
-        ajaxAuthorization.handler(function (data) {
-            switch (data.status) {
-                case 'success':
-                    d('Токен в порядке');
-                    let dialog = new Dialog('.dialogList');
-                    dialog.handle();
-                    // let friendList = new FriendList(staticToken);
-                    let friendList = new FriendList(token_vk);
-                    friendList.build();
-                    $('.window').hide();
-                    $('.dialogsPage').show();
-                    $('.toContacts').show();
-                    $('.toDialogs').show();
-                    break;
-
-                case 'error':
-                    d('Токен протух');
-                    $('.window').hide();
-                    $('.toContacts').hide();
-                    $('.toDialogs').hide();
-                    $('.loginPage').show();
-                    console.error(data.description);
-                    break;
+        return new Ajax('http://msg.9ek.ru/check_token/vk', {
+            eventName: 'ajaxCheckToken',
+            data: {
+                token_vk: window.localStorage.getItem('token_vk')
             }
         });
     }

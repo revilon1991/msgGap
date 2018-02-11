@@ -1,21 +1,171 @@
 $userFishPhoto: 'http://океанариумказань.рф/upload/iblock/def/deffbb22b0d89a8ab0d49f0f8f2dd3dd.jpg';
-.wrapper {
+.app {
   display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  flex-direction: row;
 }
-.vk_wrapper {
-  display: block;
-}
-.toContacts {
-  position: absolute;
+.navigate_buttons {
+  position: fixed;
   top: 0;
-  right: 0;
-  display: inline;
+  z-index: 99;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .toAuthorize {
+    display: none;
+  }
+  .toDialogs, .toContacts, .toAuthorize {
+    border: 1px solid;
+    background-color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    padding: 5px 10px;
+  }
 }
-.contactsPage {
-  display: none;
+.pages {
+  width: 100%;
+  .loginPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .wrapper {
+      margin: 15px 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      .login-password {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        justify-content: space-around;
+        .vk_wrapper {
+          margin: 15px 0;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: nowrap;
+          justify-content: space-around;
+          align-items: center;
+          label {
+            margin: 10px 0;
+            font-size: 15px;
+            text-transform: capitalize;
+          }
+          input {
+            border-radius: 6px;
+            border: 1px solid transparent;
+            padding: 2px 10px;
+            font-size: 14px;
+            line-height: 0.5;
+          }
+        }
+      }
+      .submitData {
+        border: 1px solid #dadada;
+        padding: 5px 10px;
+        margin: 20px;
+        background-color: #fff;
+        color: #000;
+        border-radius: 6px;
+        font-size: 15px;
+      }
+    }
+  }
+  .contactsPage {
+    display: none;
+  }
+  .dialogsPage {
+    display: none;
+  }
 }
+.window {
+  .pageWrapper {
+    .namePage {
+      font-size: 18px;
+      text-transform: capitalize;
+      border-bottom: 1px solid #dadada;
+      width: 100%;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      height: 50px;
+      z-index: 50;
+      padding-top: 10px;
+      background-color: #E4E4E4;
+    }
+    .contact, .dialogList {
+      padding-top: 50px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      .sendWrapper {
+        display: flex;
+        flex-direction: row;
+        padding: 5px 5px;
+        .photoWrapper {
+          .photo {
+            border-radius: 100px;
+            object-fit: cover;
+            background: url($userFishPhoto) no-repeat center center;
+            background-size: cover;
+            box-shadow: 0 0 1em 0 #fff;
+            width: 5em;
+            height: 5em;
+          }
+        }
+        .textWrapper {
+          border-bottom: 1px solid #dadada;
+          display: flex;
+          flex-direction: column;
+          margin-left: 15px;
+          width: 100%;
+          .information {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            justify-content: space-between;
+            .userName {
+              font-size: 14px;
+            }
+            .date {
+              font-style: italic;
+              color: #585858;
+            }
+          }
+          .message {
+            white-space: pre-line;
+          }
+
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #deviceProperties {
   display: none;
 }
@@ -25,9 +175,7 @@ $userFishPhoto: 'http://океанариумказань.рф/upload/iblock/def/
   border-radius: 45px;
   background-position: center;
 }
-.loginPage {
-  display: none;
-}
+
 .messagesChat {
   flex-direction: column;
   overflow: scroll;
@@ -59,9 +207,11 @@ $userFishPhoto: 'http://океанариумказань.рф/upload/iblock/def/
 .contactId {
   display: none;
 }
-.modalSms, .modalCaptcha {
-  background-color: #9fcdff;
-}
+
+
+
+
+
 .inputMessage {
   display: flex;
   flex-direction: row;
@@ -71,62 +221,55 @@ $userFishPhoto: 'http://океанариумказань.рф/upload/iblock/def/
     margin-left: 13px;
   }
 }
-.navigate_buttons {
-  margin-bottom: 30px;
-  display: flex;
-  flex-direction: row;
-  .toAuthorize {
-    display: none;
-  }
-  .toDialogs, .toContacts, .toAuthorize {
-    border: 1px solid;
-    background-color: #fff;
-    font-size: 15px;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 10px;
-    padding: 5px 10px;
-  }
-}
 
-.dialogsPage {
-  display: none;
-  //display: block;
-}
+
+
 .sendWrapper {
-  width: 300px;
-  height: auto;
-  padding-bottom: 15px;
-  .photoWrapper {
-    width: 20%;
-    height: auto;
-    display: inline-block;
-    .photo {
-      border-radius: 100px;
-      border: 0 solid #fff;
-      box-shadow: 0 0 7px #666;
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      background: url($userFishPhoto) no-repeat center center;
-      background-size: cover;
-    }
-  }
-  .textWrapper {
-    width: 80%;
-    height: auto;
-    display: inline-block;
-    vertical-align: top;
-    padding-left: 20px;
-    .userName {
-      font-weight: bold;
-    }
-    .date {
-      font-style: italic;
-      color: #585858;
-    }
-  }
+
+
 }
 .chatPage {
   display: none;
+}
+
+
+//modal
+.modalSms, .modalCaptcha {
+  background-color: #9fcdff;
+}
+.modal {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  .modalBox {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    label {
+      margin: 15px auto;
+      font-size: 15px;
+    }
+    input {
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-size: 15px;
+      line-height: 0.5;
+    }
+  }
+  .modalButtons {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    .modalButton {
+      border: 1px solid #dadada;
+      padding: 5px 10px;
+      margin: 20px;
+      background-color: #fff;
+      color: #000;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+  }
 }
