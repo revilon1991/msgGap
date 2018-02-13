@@ -6,14 +6,15 @@ class Authorization {
         this.imageBase64Captcha = false;
     }
 
-    processLogin(login, password) {
+    processLogin(login, password, uuid) {
         let ajaxAuthorization = new Ajax('http://msg.9ek.ru/login/vk');
         let authorization = this;
 
         ajaxAuthorization.setData({
             login: login,
             password: password,
-            uuid: '9813908'
+            uuid: '9813908',
+            // uuid: uuid
         });
 
         ajaxAuthorization.handler(function (data) {
@@ -31,7 +32,8 @@ class Authorization {
 
         ajaxAuthorization.setData({
             session: this.session,
-            sms_code: smsCode
+            sms_code: smsCode,
+            // uuid: uuid
         });
 
         ajaxAuthorization.handler(function (data) {
@@ -49,7 +51,8 @@ class Authorization {
 
         ajaxAuthorization.setData({
             session: this.session,
-            captcha_code: captchaCode
+            captcha_code: captchaCode,
+            // uuid: uuid
         });
 
         ajaxAuthorization.handler(function (data) {

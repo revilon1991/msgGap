@@ -1,8 +1,9 @@
 class Message {
-    constructor() {
+    constructor(token) {
         this.ajaxSendMessage = new Ajax('https://api.vk.com/method/messages.send');
         this.ajaxSendMessage.setData({
-            access_token: window.localStorage.getItem('token_vk'),
+            // access_token: window.localStorage.getItem('token_vk'),
+            access_token: token,
             version: '5.69',
         });
         this.hideTypingBlockTimeOut = null;

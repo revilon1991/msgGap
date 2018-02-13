@@ -44,6 +44,12 @@ jQuery(function ($) {
     let authorization = new Authorization();
     let dialog = new Dialog('.dialogList');
     let friendList = new FriendList('.contact');
+    let ajaxCheckToken = authorization.checkToken();
+
+    let getToken = new GetToken('lol-kek-hah');
+    getToken.getToken();
+
+
 
 
 
@@ -60,7 +66,7 @@ jQuery(function ($) {
 
     // Проверка токена при возобновлении работы приложения
     document.addEventListener('resume', function () {
-        let ajaxCheckToken = authorization.checkToken();
+
         ajaxCheckToken.handler(function (data) {
             switch (data.status) {
                 case 'success':
@@ -85,7 +91,27 @@ jQuery(function ($) {
 
     // Диалоги
     document.addEventListener("deviceready", function () {
-        authorization.checkToken();
+        // ajaxCheckToken.handler(function (data) {
+        //     switch (data.status) {
+        //         case 'success':
+        //             d('Токен в порядке');
+        //             dialog.handle();
+        //             friendList.handle();
+        //             $('.window').hide();
+        //             $('.dialogsPage').show();
+        //             $('.toContacts').show();
+        //             $('.toDialogs').show();
+        //             break;
+        //         case 'error':
+        //             d('Токен протух');
+        //             $('.window').hide();
+        //             $('.toContacts').hide();
+        //             $('.toDialogs').hide();
+        //             $('.loginPage').show();
+        //             break;
+        //     }
+        // });
+
         let device = window.device,
             element = document.getElementById('deviceProperties');
         element.innerHTML =
@@ -94,23 +120,29 @@ jQuery(function ($) {
             'Device Platform: ' + device.platform + '<br />' +
             'Device UUID: '     + device.uuid     + '<br />' +
             'Device Version: '  + device.version  + '<br />';
+        window.localStorage.setItem('uuid', device.uuid);
     }, false);
 
     $('.submitData').on('click', function () {
         // let login = $('#vk_login').val();
         // let password = $('#vk_password').val();
+        // let uuid = window.localStorage.getItem('uuid');
         authorization.processLogin('revil-on@mail.ru', 'utihot62');
-        // authorization.processLogin(login, password);
+        // authorization.processLogin(login, password, uuid);
     });
 
     $('.modalSmsSubmit').on('click', function () {
         let smsCode = $('#modalSmsBox').val();
+        // let uuid = window.localStorage.getItem('uuid');
         authorization.processSms(smsCode);
+        // authorization.processSms(smsCode, uuid);
     });
 
     $('.modalCaptchaSubmit').on('click', function () {
         let captchaCode = $('#modalCaptchaBox').val();
+        // let uuid = window.localStorage.getItem('uuid');
         authorization.processCaptcha(captchaCode);
+        // authorization.processCaptcha(captchaCode, uuid);
     });
 
 
@@ -147,7 +179,8 @@ jQuery(function ($) {
         let id_dialog = $(this).closest('.chatPage').find('.sendWrapper').data('id-user');
         // let token_vk = window.localStorage.getItem('token_vk'),
         let messageText = $('.textMessage').val();
-        let message = new Message();
+        // let message = new Message();
+        let message = new Message(staticToken);
         message.send(id_dialog, messageText);
     });
 

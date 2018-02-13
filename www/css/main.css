@@ -9,7 +9,7 @@
 .navigate_buttons {
   position: fixed;
   top: 0;
-  z-index: 99;
+  z-index: 999;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -23,7 +23,8 @@
     cursor: pointer;
     text-align: center;
     border-radius: 10px;
-    padding: 5px 10px; }
+    padding: 5px 10px;
+    z-index: 999; }
 
 .pages {
   width: 100%; }
@@ -56,7 +57,7 @@
             text-transform: capitalize; }
           .pages .loginPage .wrapper .login-password .vk_wrapper input {
             border-radius: 6px;
-            border: 1px solid transparent;
+            border: 1px solid #dadada;
             padding: 2px 10px;
             font-size: 14px;
             line-height: 0.5; }
