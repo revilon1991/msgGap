@@ -99,7 +99,7 @@ jQuery(function ($) {
         setInterval(function () {
             // cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             // cordova.plugins.Keyboard.hideFormAccessoryBar(true);
-            Keyboard.hideKeyboardAccessoryBar(true)
+            // cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true)
             // Keyboard.hide();
         }, 1000);
 
