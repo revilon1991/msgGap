@@ -89,19 +89,19 @@ jQuery(function ($) {
         });
     });
 
-    window.addEventListener('keyboardDidShow', (ev) => {
+    // window.addEventListener('keyboardDidShow', (ev) => {
         // Describe your logic which will be run each time when keyboard is about to be shown.
-        alert('hi');
-    });
+        // alert('hi');
+    // });
 
     // Диалоги
     document.addEventListener("deviceready", function () {
-        setInterval(function () {
+        // setInterval(function () {
             // cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             // cordova.plugins.Keyboard.hideFormAccessoryBar(true);
             // cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true)
             // Keyboard.hide();
-        }, 1000);
+        // }, 1000);
 
         // ajaxCheckToken.handler(function (data) {
         //     switch (data.status) {
