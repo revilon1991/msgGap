@@ -89,10 +89,10 @@ jQuery(function ($) {
         });
     });
 
-    window.addEventListener('keyboardDidShow', (ev) => {
-        // Describe your logic which will be run each time when keyboard is about to be shown.
-        alert('hi');
-    });
+    // window.addEventListener('keyboardDidShow', (ev) => {
+    //     // Describe your logic which will be run each time when keyboard is about to be shown.
+    //     alert('hi');
+    // });
 
     // Диалоги
     document.addEventListener("deviceready", function () {
