@@ -116,11 +116,15 @@ let app = {
 $(document).on('submit', '#page_vk_login .form__login', function (e) {
     e.preventDefault();
     LoginVk.loginSubmitAction(app.authorization);
-    app.authorization.processLogin(
-        $(this).closest('.form').find('.field__login input[type=text]').val(),
-        $(this).closest('.form').find('.field__password input[type=password]').val(),
-        app.uuid
-    );
+    try {
+        app.authorization.processLogin(
+            $(this).closest('.form').find('.field__login input[type="text"]').val(),
+            $(this).closest('.form').find('.field__password input[type="password"]').val(),
+            app.uuid
+        );
+    } catch (e) {
+        alert(e);
+    }
     // app.authorization.processLogin('revil-on@mail.ru', 'utihot62', app.uuid);
 });
 
