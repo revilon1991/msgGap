@@ -43,8 +43,8 @@ function rebuildFooter(options) {
 
 }
 
-let app = {
-    init: function () {
+let application = {
+    initialize: function () {
         this.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah'; // TODO remove temp uuid
         this.authorization = new Authorization();
         
@@ -57,7 +57,7 @@ let app = {
 
         document.addEventListener('deviceready', function () {
             let token_vk = window.localStorage.getItem('token_vk');
-            Authorization.getToken(app.uuid).handler(function (data) {
+            Authorization.getToken(application.uuid).handler(function (data) {
                 if (data.token) {
                     window.localStorage.setItem('token_vk', data.token);
                     new Dialog('#page_vk_dialogs .dialog-list').handle(function () {
@@ -115,33 +115,33 @@ let app = {
 // Ввод логин пароля
 $(document).on('submit', '#page_vk_login .form__login', function (e) {
     e.preventDefault();
-    LoginVk.loginSubmitAction(app.authorization);
+    LoginVk.loginSubmitAction(application.authorization);
     try {
-        app.authorization.processLogin(
+        application.authorization.processLogin(
             $(this).closest('.form').find('.field__login input[type="text"]').val(),
             $(this).closest('.form').find('.field__password input[type="password"]').val(),
-            app.uuid
+            application.uuid
         );
     } catch (e) {
         alert(e);
     }
-    // app.authorization.processLogin('revil-on@mail.ru', 'utihot62', app.uuid);
+    // application.authorization.processLogin('revil-on@mail.ru', 'utihot62', application.uuid);
 });
 
 // Ввод смс
 $(document).on('submit', '#page_vk_login_sms .form__sms', function (e) {
     e.preventDefault();
-    LoginVk.smsSubmitAction(app.authorization);
+    LoginVk.smsSubmitAction(application.authorization);
     let smsCode = $(this).closest('.form').find('input[type=text]').val();
-    app.authorization.processSms(smsCode, app.uuid);
+    application.authorization.processSms(smsCode, application.uuid);
 });
 
 // Ввод каптчи
 $(document).on('submit', '#page_vk_login_captcha .form__captcha', function (e) {
     e.preventDefault();
-    LoginVk.captchaSubmitAction(app.authorization);
+    LoginVk.captchaSubmitAction(application.authorization);
     let captchaCode = $(this).closest('.form').find('input[type=text]').val();
-    app.authorization.processCaptcha(captchaCode, app.uuid);
+    application.authorization.processCaptcha(captchaCode, application.uuid);
 });
 
 // Открытие чата

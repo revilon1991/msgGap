@@ -16,9 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-let application = {
+let application_old = {
     // Application Constructor
-    initialize: function() {
+    initialize_old: function() {
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -34,7 +34,6 @@ let application = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         application.receivedEvent('deviceready');
-        app.init();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
