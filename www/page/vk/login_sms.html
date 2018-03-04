@@ -1,0 +1,30 @@
+<div data-role="page" id="page_vk_login_sms">
+
+    <div data-role="header" role="banner">
+        <h1 role="heading" class="ui-header ui-bar-inherit">
+            СМС
+        </h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <p>Введите полученнный код</p>
+        <form class="form form__sms" data-ajax="false">
+            <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                <li class="field__sms ui-field-contain ui-li-static ui-body-inherit">
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                        <input type="text" placeholder="Код из смс" required>
+                    </div>
+                </li>
+                <li class="ui-field-contain ui-li-static ui-body-inherit">
+                    <div class="ui-btn ui-input-btn ui-corner-all ui-shadow">
+                        Отправить
+                        <input type="submit" value="Отправить">
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div><!-- /content -->
+
+    <div class="pseudo-footer"></div>
+
+</div><!-- /page -->

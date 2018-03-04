@@ -80,36 +80,53 @@ class LongPull {
      * @param response
      */
     handle(response) {
-        // d(response['updates']);
         for (let i = 0; i < response['updates']['length']; i++) {
 
             switch (response['updates'][i][0]) {
-                case 4: // отправка сообщение
-                    let indexMessage = response['updates'][i][2];
-                    if (indexMessage === 49 || indexMessage === 35) {
-                        let msg = response['updates'][i][5];
-                        Message.appendNewMessages(msg, indexMessage);
+                case 4: // отправка сообщения
+                    let message = response['updates'][i][5],
+                        formatMessage,
+                        messageId = response['updates'][i][1],
+                        indexMessage = response['updates'][i][2]
+                    ;
+
+                    // https://ru.stackoverflow.com/questions/631007/%D0%A4%D0%BB%D0%B0%D0%B3%D0%B8-%D1%81%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D0%BD%D0%B8%D0%B9-vk-api
+                    if (!!(indexMessage & 2)) {
+                        formatMessage = 'sentMessage';
+                    } else {
+                        formatMessage = 'receivedMessage';
                     }
+                    ChatVk.appendNewMessages(message, messageId, formatMessage);
+                    ChatVk.enterChatScrollBottomAction();
                     break;
-                case 6: // Прочтение всех входящих сообщений
+                case 6: // Пользователь приложения прочитал все входящие сообщения
+                    ChatVk.removeFlagUnread('receivedMessage');
                     break;
-                case 7:  // Прочтение всех исходящих сообщений
-                    let checkOut = response['updates'][i];
-                    // d(checkOut);
+                case 7:  // Собеседник прочитал все сообщения отправленные пользователем приложения
+                    ChatVk.removeFlagUnread('sentMessage');
                     break;
                 case 8: // Юзер стал онлайн
+                    ChatVk.setUserStatus('online');
                     break;
                 case 9: // Юзер стал оффлайн
+                    ChatVk.setUserStatus('offline');
                     break;
                 case 61: // Пользователь начал писать сообещние
-                    let user_id = response['updates'][i][1];
-
                     clearTimeout(this.message.hideTypingBlockTimeOut);
                     this.message.hideTypingBlockTimeOut = setTimeout(function () {
-                        jQuery('.userTyping').fadeOut('slow');
+                        ChatVk.setUserStatus('end-typing');
                     }, 6000);
+                    ChatVk.setUserStatus('start-typing');
 
-                    this.message.userTyping(user_id);
+                    // for dialogs
+                    // let user_id = response['updates'][i][1];
+                    // let userObject = $('[data-id-user=' + user_id + ']');
+                    // let userInfo = new UserInfo('message');
+                    // userInfo.take(user_id);
+                    // document.addEventListener(userInfo.ajaxUserInfo.event.type, function (e) {
+                    //     let userName = e.detail.response.response[0]['first_name'];
+                    //     userObject.find('.userTyping').text(userName + ' пишет...').fadeIn('slow');
+                    // }, false);
 
                     break;
             }

@@ -2,8 +2,9 @@ class Authorization {
     constructor() {
         this.statusChecker = false;
         this.token = false;
-        this.session = false;
+        this.migration = false;
         this.imageBase64Captcha = false;
+        this.callback = null;
     }
 
     processLogin(login, password, uuid) {
@@ -13,8 +14,12 @@ class Authorization {
         ajaxAuthorization.setData({
             login: login,
             password: password,
-            uuid: '9813908',
-            // uuid: uuid
+            uuid: uuid
+        });
+
+        ajaxAuthorization.setErrorHandler(function (data) {
+            console.error(data);
+            LoginVk.loginErrorAction();
         });
 
         ajaxAuthorization.handler(function (data) {
@@ -24,16 +29,24 @@ class Authorization {
 
             authorization.handlerStatus();
         });
+
+        ajaxAuthorization.setPostLoader(this.callback);
     }
 
-    processSms(smsCode) {
+    processSms(smsCode, uuid) {
         let ajaxAuthorization = new Ajax('http://msg.9ek.ru/sms/vk');
         let authorization = this;
 
         ajaxAuthorization.setData({
-            session: this.session,
+            migration: this.migration,
             sms_code: smsCode,
-            // uuid: uuid
+            uuid: uuid
+        });
+
+        ajaxAuthorization.setErrorHandler(function (data) {
+            console.error(data);
+            alert(JSON.stringify(data));
+            LoginVk.smsErrorAction();
         });
 
         ajaxAuthorization.handler(function (data) {
@@ -43,6 +56,8 @@ class Authorization {
 
             authorization.handlerStatus();
         });
+
+        ajaxAuthorization.setPostLoader(this.callback);
     }
 
     processCaptcha(captchaCode) {
@@ -50,9 +65,14 @@ class Authorization {
         let authorization = this;
 
         ajaxAuthorization.setData({
-            session: this.session,
+            migration: this.migration,
             captcha_code: captchaCode,
-            // uuid: uuid
+            uuid: uuid
+        });
+
+        ajaxAuthorization.setErrorHandler(function (data) {
+            console.error(data);
+            LoginVk.captchaErrorAction();
         });
 
         ajaxAuthorization.handler(function (data) {
@@ -62,43 +82,50 @@ class Authorization {
 
             authorization.handlerStatus();
         });
+
+        ajaxAuthorization.setPostLoader(this.callback);
     }
 
     handlerStatus() {
+        console.log(this.statusChecker);
         switch (this.statusChecker) {
             case 'sms_checker':
-                $('.modalSms').show();
+                LoginVk.smsRenderAction();
                 break;
 
             case 'captcha_checker':
-                let imgCaptchca = "<img src='data:image/jpeg;base64," + this.imageBase64Captcha + "'/>";
-                $('.modalSms').hide();
-                $('.modalCaptcha').show().append(imgCaptchca);
+                LoginVk.captchaRenderAction(this.imageBase64Captcha);
                 break;
 
             case 'success':
                 window.localStorage.setItem('token_vk', this.token);
-                $('.modalCaptcha').hide();
-                $('.modalSms').hide();
-                let friendList = new FriendList('.contact');
-                friendList.handle();
-                let dialog = new Dialog('.dialogList');
+                // let friendList = new FriendList('.contact');
+                let dialog = new Dialog('#page_vk_dialogs .dialog-list');
+
+                // friendList.handle();
                 dialog.handle();
-                $('.window').hide();
-                $('.dialogsPage').show();
-                $('.toContacts').show();
-                $('.toDialogs').show();
+
+                LoginVk.successRenderAction();
                 break;
         }
 
         return this.statusChecker;
     }
 
-    checkToken() {
+    static checkToken(token) {
         return new Ajax('http://msg.9ek.ru/check_token/vk', {
             eventName: 'ajaxCheckToken',
             data: {
-                token_vk: window.localStorage.getItem('token_vk')
+                token_vk: token
+            }
+        });
+    }
+
+    static getToken(uuid) {
+        return new Ajax('http://msg.9ek.ru/get_token/vk', {
+            eventName: 'ajaxGetToken',
+            data: {
+                uuid: uuid
             }
         });
     }
@@ -106,7 +133,11 @@ class Authorization {
     saveData(data) {
         this.statusChecker = data['status'] ? data['status'] : this.statusChecker;
         this.imageBase64Captcha = data['image_base64_captcha'] ? data['image_base64_captcha'] : this.imageBase64Captcha;
-        this.session = data['session'] ? data['session'] : this.session;
+        this.migration = data['migrate_data_vk'] ? data['migrate_data_vk'] : this.migration;
         this.token = data['token_vk'] ? data['token_vk'] : this.token;
+    }
+
+    setCallback(callable) {
+        this.callback = callable;
     }
 }

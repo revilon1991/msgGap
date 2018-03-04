@@ -1,4 +1,63 @@
 $userFishPhoto: 'http://океанариумказань.рф/upload/iblock/def/deffbb22b0d89a8ab0d49f0f8f2dd3dd.jpg';
+
+@import "vk/dialogs";
+@import "vk/chat";
+
+.ui-loader {
+  .custom-loader {
+    text-align: center;
+    font-size: 30px;
+  }
+}
+
+footer.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: darkgrey;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+}
+.pseudo-footer {
+  height: 34px;
+}
+
+.touch-element {
+  background-color: #71cbff !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .app {
   display: flex;
   height: 100%;
@@ -67,14 +126,26 @@ $userFishPhoto: 'http://океанариумказань.рф/upload/iblock/def/
           }
         }
       }
-      .submitData {
-        border: 1px solid #dadada;
-        padding: 5px 10px;
+      .wrapper-submitData {
+        width: 100px;
+        height: 40px;
+        text-align: center;
         margin: 20px;
         background-color: #fff;
-        color: #000;
         border-radius: 6px;
-        font-size: 15px;
+        .button-loader {
+          height: inherit;
+          width: inherit;
+          object-fit: contain;
+        }
+        .submitData {
+          padding: 5px 10px;
+          color: #000;
+          font-size: 15px;
+          width: inherit;
+          height: inherit;
+          background-color: #fff;
+        }
       }
     }
   }
@@ -85,71 +156,6 @@ $userFishPhoto: 'http://океанариумказань.рф/upload/iblock/def/
     display: none;
   }
 }
-.window {
-  .pageWrapper {
-    .namePage {
-      font-size: 18px;
-      text-transform: capitalize;
-      border-bottom: 1px solid #dadada;
-      width: 100%;
-      text-align: center;
-      position: fixed;
-      top: 0;
-      height: 50px;
-      z-index: 50;
-      padding-top: 10px;
-      background-color: #E4E4E4;
-    }
-    .contact, .dialogList {
-      padding-top: 50px;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      .sendWrapper {
-        display: flex;
-        flex-direction: row;
-        padding: 5px 5px;
-        .photoWrapper {
-          .photo {
-            border-radius: 100px;
-            object-fit: cover;
-            background: url($userFishPhoto) no-repeat center center;
-            background-size: cover;
-            box-shadow: 0 0 1em 0 #fff;
-            width: 5em;
-            height: 5em;
-          }
-        }
-        .textWrapper {
-          border-bottom: 1px solid #dadada;
-          display: flex;
-          flex-direction: column;
-          margin-left: 15px;
-          width: 100%;
-          .information {
-            display: flex;
-            flex-wrap: nowrap;
-            flex-direction: row;
-            justify-content: space-between;
-            .userName {
-              font-size: 14px;
-            }
-            .date {
-              font-style: italic;
-              color: #585858;
-            }
-          }
-          .message {
-            white-space: pre-line;
-          }
-
-        }
-      }
-    }
-  }
-}
-
-
 
 
 
@@ -175,31 +181,6 @@ $userFishPhoto: 'http://океанариумказань.рф/upload/iblock/def/
   height: 50px;
   border-radius: 45px;
   background-position: center;
-}
-
-.messagesChat {
-  flex-direction: column;
-  overflow: scroll;
-  height: 300px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  display: flex;
-  width: 100%;
-  background-color: #fff;
-  .receivedMessage {
-    align-self: flex-start;
-    display: block;
-    margin: 5px;
-    border: 1px solid green;
-    border-radius: 45px;
-  }
-  .sentMessage {
-    align-self: flex-end;
-    display: block;
-    margin: 5px;
-    border: 1px solid red;
-    border-radius: 45px;
-  }
 }
 .contactWrapper {
   display: flex;

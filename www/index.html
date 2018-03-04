@@ -1,174 +1,276 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-
 <head>
     <meta charset="utf-8"/>
     <meta name="format-detection" content="telephone=no"/>
-
     <meta name="msapplication-tap-highlight" content="no"/>
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
-    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-
-
-    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:;"  />-->
-    <meta http-equiv="Content-Security-Policy" content="default-src *;
-   img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
-   style-src  'self' 'unsafe-inline' *">
-    <!-- Good default declaration:
-    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-        * Enable inline JS: add 'unsafe-inline' to default-src
-        * Enable eval(): add 'unsafe-eval' to default-src
-    * Create your own at http://cspisawesome.com
-    -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.min.css"/>
+    <meta http-equiv="Content-Security-Policy" content="connect-src *; default-src *; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome-animation.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
     <title>MSG</title>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $('body').on('mobileinit', function () {
+            $.mobile.hashListeningEnabled = false;
+            $.mobile.pushStateEnabled = false;
+            $.mobile.allowCrossDomainPages = true;
+            $.support.cors = true;
+        });
+    </script>
+    <script src="js/jquery.mobile-1.5.0-alpha.1.min.js"></script>
 </head>
+<body class="ui-mobile-viewport ui-overlay-a">
 
-<body>
-<div class="app">
-    <!-- navigate_buttons -->
-    <div class="navigate_buttons">
-        <div class="toDialogs">
-            toDialogs
-        </div>
-        <div class="toContacts">
-            toContacts
-        </div>
-        <div class="toAuthorize">
-            toAuthorize
-        </div>
+<!-------------------------------------------- Main ------------------------------------------------------------------->
+<div data-role="page" id="index">
+    <div data-role="header" role="banner">
+        <h1 role="heading" class="ui-header ui-bar-inherit">
+            MSG
+        </h1>
     </div>
-    <!-- /navigate_buttons -->
+    <div role="main" class="ui-content">
+    </div>
 
-    <!-- pages -->
+    <div class="pseudo-footer"></div>
 
+</div><!-- /page -->
+<!-------------------------------------------- /Main ------------------------------------------------------------------>
 
-    <div class="pages">
+<!-------------------------------------------- Vkontakte Login -------------------------------------------------------->
+<div data-role="page" id="page_vk_login">
 
-        <div class="loginPage window">
-            <div class="namePage">
-                Authorization
-            </div>
-            <div class="wrapper">
-                <div class="vk_logo">
-                    Вконтакте
-                </div>
-                <div class="login-password">
-                    <div class="vk_wrapper">
-                        <label for="vk_login">login</label>
-                        <label for="vk_password">password</label>
+    <div data-role="header" role="banner">
+        <h1 role="heading" class="ui-header ui-bar-inherit">
+            Вконтакте
+        </h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <p>Российская социальная сеть со штаб-квартирой в Санкт-Петербурге. Крупнейшая социальная сеть в Европе. Сайт доступен на более чем 90 языках; особенно популярен среди русскоязычных пользователей</p>
+        <form class="form form__login" data-ajax="false">
+            <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                <li class="field__login ui-field-contain ui-li-static ui-body-inherit">
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                        <input type="text" placeholder="Логин">
                     </div>
-                    <div class="vk_wrapper">
-                        <input id="vk_login" type="text" name="vk_login">
-                        <input id="vk_password" type="password" class="password" name="vk_password">
-                        <!--<input type="button" title="Показать пароль" class="check_password">-->
+                </li>
+                <li class="field__password ui-field-contain ui-li-static ui-body-inherit">
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                        <input type="password" placeholder="Пароль">
                     </div>
+                </li>
+                <li class="ui-field-contain ui-li-static ui-body-inherit">
+                    <div class="ui-btn ui-input-btn ui-corner-all ui-shadow">
+                        Отправить
+                        <input type="submit" value="Отправить">
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div><!-- /content -->
+
+    <div class="pseudo-footer"></div>
+
+</div><!-- /page -->
+<!-------------------------------------------- /Vkontakte Login ------------------------------------------------------->
+
+<!-------------------------------------------- Vkontakte SMS ---------------------------------------------------------->
+<div data-role="page" id="page_vk_login_sms">
+
+    <div data-role="header" role="banner">
+        <h1 role="heading" class="ui-header ui-bar-inherit">
+            СМС
+        </h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <p>Введите полученнный код</p>
+        <form class="form form__sms" data-ajax="false">
+            <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                <li class="field__sms ui-field-contain ui-li-static ui-body-inherit">
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                        <input type="text" placeholder="Код из смс" required>
+                    </div>
+                </li>
+                <li class="ui-field-contain ui-li-static ui-body-inherit">
+                    <div class="ui-btn ui-input-btn ui-corner-all ui-shadow">
+                        Отправить
+                        <input type="submit" value="Отправить">
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div><!-- /content -->
+
+    <div class="pseudo-footer"></div>
+
+</div><!-- /page -->
+<!-------------------------------------------- /Vkontakte SMS --------------------------------------------------------->
+
+<!-------------------------------------------- Vkontakte Captcha ------------------------------------------------------>
+<div data-role="page" id="page_vk_login_captcha">
+
+    <div data-role="header" role="banner">
+        <h1 role="heading" class="ui-header ui-bar-inherit">
+            Каптча
+        </h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <div class="ui-body ui-body-a ui-corner-all">
+            <p>Введите код с картинки</p>
+            <div class="image-captcha"></div>
+        </div>
+        <form class="form form__captcha" data-ajax="false">
+            <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                <li class="field__captcha ui-field-contain ui-li-static ui-body-inherit">
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                        <input type="text" placeholder="Код с кратинки" required>
+                    </div>
+                </li>
+                <li class="ui-field-contain ui-li-static ui-body-inherit">
+                    <div class="ui-btn ui-input-btn ui-corner-all ui-shadow">
+                        Отправить
+                        <input type="submit" value="Отправить">
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div><!-- /content -->
+
+    <div class="pseudo-footer"></div>
+
+</div><!-- /page -->
+<!-------------------------------------------- /Vkontakte Captcha ----------------------------------------------------->
+
+<!-------------------------------------------- Vkontakte Chat --------------------------------------------------------->
+<div data-role="page" id="page_vk_chat">
+
+    <div data-role="header" role="banner">
+        <div role="heading" class="ui-header ui-bar-inherit ui-header-fixed">
+            <a href="#page_vk_dialogs"
+               class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline"
+            >Button</a>
+            <div class="header__block">
+                <span class="status">
+                    <i class="typing fa fa-comment faa-ring animated"></i>
+                    <i class="online fa fa-eye"></i>
+                </span>
+                <div class="header__text">
+                    Чат
                 </div>
-
-                <input class="submitData" type="submit" value="логин" name="vk_submit">
-                <div class="ggg">fnalal</div>
             </div>
         </div>
+    </div><!-- /header -->
 
-        <div class="dialogsPage window">
-            <div class="pageWrapper">
-                <div class="namePage">
-                    Dialogs
+    <div role="main" class="ui-content">
+        <div class="chat"></div>
+    </div><!-- /content -->
+
+    <div class="ui-page-theme-a">
+        <div data-role="footer"
+             data-position="fixed"
+             role="contentinfo"
+             class="ui-footer ui-bar-inherit ui-footer-fixed slideup"
+        >
+            <form class="send-message">
+                <textarea type="text"
+                          class="field__text ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow"
+                ></textarea>
+                <a class="submit ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext ui-btn-inline">
+                    Button
+                </a>
+            </form>
+            <h4 style="display:none;" class="ui-title" role="heading" aria-level="1">Footer</h4>
+        </div>
+    </div><!-- /footer -->
+
+    <div class="pseudo-footer"></div>
+
+</div><!-- /page -->
+<!-------------------------------------------- /Vkontakte Chat -------------------------------------------------------->
+
+<!-------------------------------------------- Vkontakte Dialogs ------------------------------------------------------>
+<div data-role="page" id="page_vk_dialogs">
+
+    <div data-role="header" role="banner">
+        <h1 role="heading" class="ui-header ui-bar-inherit">
+            Диалоги
+        </h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <div class="dialog-list"></div>
+    </div><!-- /content -->
+
+    <div class="pseudo-footer"></div>
+
+</div><!-- /page -->
+<!-------------------------------------------- /Vkontakte Dialogs ----------------------------------------------------->
+
+<!-------------------------------------------- Telegram Login --------------------------------------------------------->
+<div data-role="page" id="page_tg_login">
+
+    <div data-role="header" role="banner">
+        <h1 role="heading" class="ui-header ui-bar-inherit">
+            Телеграм
+        </h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <p>Кроссплатформенный мессенджер, позволяющий обмениваться сообщениями и медиафайлами многих форматов.</p>
+        <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+            <li class="ui-field-contain ui-li-static ui-body-inherit">
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                    <input type="text" placeholder="Номер телефона">
                 </div>
-                <div class="dialogList"></div>
-            </div>
-        </div>
-
-        <div class="contactsPage window">
-            <div class="pageWrapper">
-                <div class="namePage">
-                    Contacts
+            </li>
+            <li class="ui-field-contain ui-li-static ui-body-inherit">
+                <div class="ui-btn ui-input-btn ui-corner-all ui-shadow">
+                    Отправить
+                    <input type="submit" value="Отправить">
                 </div>
-                <div class="contact"></div>
-            </div>
+            </li>
+        </ul>
+    </div><!-- /content -->
+
+    <div class="pseudo-footer"></div>
+
+</div><!-- /page -->
+<!-------------------------------------------- /Telegram Login -------------------------------------------------------->
+
+<div class="footer-static ui-page-theme-a">
+    <div data-role="footer" data-position="fixed" role="contentinfo" class="ui-footer ui-bar-inherit ui-footer-fixed slideup">
+        <div data-role="navbar" class="ui-navbar" data-grid="c" role="navigation">
+            <ul class="ui-grid-c">
+                <li class="ui-block-a">
+                    <a href="#page_vk_login" class="ui-link ui-btn button__vk"><i class="fa fa-vk"></i></a>
+                </li>
+                <li class="ui-block-b">
+                    <a href="#page_tg_login" class="ui-link ui-btn button__tg"><i class="fa fa-telegram"></i></a>
+                </li>
+                <li class="ui-block-c">
+                    <a href="#" class="ui-link ui-btn button__fb"><i class="fa fa-facebook-f"></i></a>
+                </li>
+                <li class="ui-block-d">
+                    <a href="#" class="ui-link ui-btn button__wa"><i class="fa fa-whatsapp"></i></a>
+                </li>
+            </ul>
         </div>
+        <h4 style="display:none;" class="ui-title" role="heading" aria-level="1">Footer</h4>
     </div>
-    <!-- /pages -->
-
-    <!-- chat -->
-    <div class="chatPage">
-        <div class="">
-            <div class="nameChat"></div>
-            <div class="messagesChat"></div>
-            <div class="inputMessage">
-                <div class="attachesMessage">@</div>
-                <input class="textMessage" type="text" placeholder="Введите текст">
-                <div class="sendMessage">></div>
-            </div>
-        </div>
-    </div>
-    <!-- /chat -->
-
-    <!-- popups -->
-    <div class="popups">
-        <div class="modalSms modal">
-            <div class="modalBox">
-                <label for="modalSmsBox">Введите код полученнный в СМС</label>
-                <input id="modalSmsBox" type="text">
-            </div>
-            <div class="modalButtons">
-                <div class="modalButton modalSmsSubmit">Отправить</div>
-                <div class="modalButton modalSmsCancel">Отмена</div>
-            </div>
-        </div>
-
-
-        <div class="modalCaptcha modal">
-            <div class="modalBox">
-                <label for="modalCaptchaBox">Введите код с картинки </label>
-                <input id="modalCaptchaBox" type="text">
-            </div>
-            <div class="modalButtons">
-                <div class="modalButton modalCaptchaSubmit">Отправить</div>
-                <div class="modalButton modalCaptchaCancel">Отмена</div>
-            </div>
-        </div>
-    </div>
-    <!-- /popups -->
-</div>
-
-<p id="deviceProperties"></p>
+</div><!-- /footer -->
 
 <script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script src="js/popper.min.js"></script>
 <script type="text/javascript" src="js/moment-with-locales.min.js"></script>
 <script type="text/javascript" src="js/typeahead.bundle.js"></script>
+<script type="text/javascript" src="js/sprintf.min.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/User.js"></script>
 <script type="text/javascript" src="js/Authorization.js"></script>
 <script type="text/javascript" src="js/MessageHistory.js"></script>
@@ -179,10 +281,13 @@
 <script type="text/javascript" src="js/FriendList.js"></script>
 <script type="text/javascript" src="js/LongPull.js"></script>
 <script type="text/javascript" src="js/GetToken.js"></script>
-
+<script type="text/javascript" src="js/vk/front/LoginVk.js"></script>
+<script type="text/javascript" src="js/vk/front/ChatVk.js"></script>
 <script type="text/javascript" src="js/Ajax.js"></script>
+
+<script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript">
-    app.initialize();
+    application.initialize();
 </script>
 
 </body>

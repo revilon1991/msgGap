@@ -7,7 +7,8 @@ class FriendList {
         this.ajaxFriend = new Ajax('http://msg.9ek.ru/friendList/vk', {
             eventName: 'ajaxFriend',
             data: {
-                token_vk: window.localStorage.getItem('token_vk')
+                token_vk: window.localStorage.getItem('token_vk'),
+                version: '5.69'
             }
         });
 

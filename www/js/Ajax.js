@@ -9,6 +9,9 @@ class Ajax {
             detail: this
         });
         this.response = null;
+        this.errorHandler = null;
+        this.preLoader = null;
+        this.postLoader = null;
     }
 
     /**
@@ -45,12 +48,16 @@ class Ajax {
         });
     }
 
-    preloader(callable) {
-        return callable;
+    setErrorHandler(callable) {
+        this.errorHandler = callable;
     }
 
-    postloader(callable) {
-        return callable;
+    setPreLoader(callable) {
+        this.preLoader = callable;
+    }
+
+    setPostLoader(callable) {
+        this.postLoader = callable;
     }
 
     /**
@@ -79,14 +86,12 @@ class Ajax {
             method: this.method,
             url: this.api,
             data: this.data,
-            beforeSend: this.preloader,
+            beforeSend: this.preLoader,
             success: function (data) {
 
             },
-            error: function (data) {
-                console.error(data);
-            },
-            complete: this.postloader
+            error: this.errorHandler,
+            complete: this.postLoader
         });
     }
 

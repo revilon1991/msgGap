@@ -1,4 +1,122 @@
 @charset "UTF-8";
+#page_vk_dialogs .dialog-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap; }
+  #page_vk_dialogs .dialog-list .sendWrapper {
+    display: flex;
+    flex-direction: row;
+    padding: 5px 5px;
+    border-bottom: 1px solid #dadada; }
+    #page_vk_dialogs .dialog-list .sendWrapper .photoWrapper .photo {
+      border-radius: 100px;
+      object-fit: cover;
+      background: url("http://океанариумказань.рф/upload/iblock/def/deffbb22b0d89a8ab0d49f0f8f2dd3dd.jpg") no-repeat center center;
+      background-size: cover;
+      box-shadow: 0 0 1em 0 #fff;
+      width: 5em;
+      height: 5em; }
+    #page_vk_dialogs .dialog-list .sendWrapper .textWrapper {
+      display: flex;
+      flex-direction: column;
+      margin-left: 15px;
+      width: 100%; }
+      #page_vk_dialogs .dialog-list .sendWrapper .textWrapper .information {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: space-between; }
+        #page_vk_dialogs .dialog-list .sendWrapper .textWrapper .information .userName {
+          font-size: 14px; }
+        #page_vk_dialogs .dialog-list .sendWrapper .textWrapper .information .date {
+          font-style: italic;
+          color: #585858; }
+      #page_vk_dialogs .dialog-list .sendWrapper .textWrapper .message {
+        white-space: pre-line; }
+
+#page_vk_chat .chat {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  justify-content: flex-start;
+  align-items: flex-start; }
+  #page_vk_chat .chat .message.unread {
+    background-color: #d6eefd; }
+  #page_vk_chat .chat .message.receivedMessage {
+    display: block;
+    align-self: flex-start;
+    margin: 5px;
+    border: 1px solid #a2a0a0;
+    box-shadow: -2px 0 3px #a2a0a0;
+    border-radius: 5px;
+    padding: 4px 5px; }
+  #page_vk_chat .chat .message.sentMessage {
+    display: block;
+    align-self: flex-end;
+    margin: 5px;
+    border: 1px solid #5cb8f9;
+    box-shadow: 2px 0 3px #5cb8f9;
+    border-radius: 5px;
+    padding: 4px 5px; }
+#page_vk_chat [data-role=header] {
+  height: 28px; }
+  #page_vk_chat [data-role=header] .ui-header {
+    display: flex;
+    align-self: flex-start;
+    justify-content: baseline; }
+    #page_vk_chat [data-role=header] .ui-header .ui-icon-arrow-l {
+      margin: 0 5px; }
+    #page_vk_chat [data-role=header] .ui-header .header__block {
+      display: flex;
+      width: 90%;
+      height: 28px;
+      padding-right: 15px;
+      text-align: right; }
+      #page_vk_chat [data-role=header] .ui-header .header__block .status {
+        display: inline-block;
+        width: 10%;
+        font-size: 20px; }
+        #page_vk_chat [data-role=header] .ui-header .header__block .status .online, #page_vk_chat [data-role=header] .ui-header .header__block .status .typing {
+          display: none; }
+      #page_vk_chat [data-role=header] .ui-header .header__block .header__text {
+        width: 90%;
+        display: inline-block;
+        text-align: right;
+        font-size: 23px; }
+#page_vk_chat .ui-footer {
+  z-index: 1001; }
+  #page_vk_chat .ui-footer form.send-message {
+    display: flex;
+    align-self: flex-start;
+    justify-content: space-evenly; }
+    #page_vk_chat .ui-footer form.send-message .field__text {
+      width: 80%; }
+    #page_vk_chat .ui-footer form.send-message .submit {
+      margin: 5px 0; }
+#page_vk_chat .pseudo-footer {
+  height: 58px; }
+
+.ui-loader .custom-loader {
+  text-align: center;
+  font-size: 30px; }
+
+footer.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: darkgrey;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center; }
+
+.pseudo-footer {
+  height: 34px; }
+
+.touch-element {
+  background-color: #71cbff !important; }
+
 .app {
   display: flex;
   height: 100%;
@@ -61,66 +179,28 @@
             padding: 2px 10px;
             font-size: 14px;
             line-height: 0.5; }
-      .pages .loginPage .wrapper .submitData {
-        border: 1px solid #dadada;
-        padding: 5px 10px;
+      .pages .loginPage .wrapper .wrapper-submitData {
+        width: 100px;
+        height: 40px;
+        text-align: center;
         margin: 20px;
         background-color: #fff;
-        color: #000;
-        border-radius: 6px;
-        font-size: 15px; }
+        border-radius: 6px; }
+        .pages .loginPage .wrapper .wrapper-submitData .button-loader {
+          height: inherit;
+          width: inherit;
+          object-fit: contain; }
+        .pages .loginPage .wrapper .wrapper-submitData .submitData {
+          padding: 5px 10px;
+          color: #000;
+          font-size: 15px;
+          width: inherit;
+          height: inherit;
+          background-color: #fff; }
   .pages .contactsPage {
     display: none; }
   .pages .dialogsPage {
     display: none; }
-
-.window .pageWrapper .namePage {
-  font-size: 18px;
-  text-transform: capitalize;
-  border-bottom: 1px solid #dadada;
-  width: 100%;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  height: 50px;
-  z-index: 50;
-  padding-top: 10px;
-  background-color: #E4E4E4; }
-.window .pageWrapper .contact, .window .pageWrapper .dialogList {
-  padding-top: 50px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap; }
-  .window .pageWrapper .contact .sendWrapper, .window .pageWrapper .dialogList .sendWrapper {
-    display: flex;
-    flex-direction: row;
-    padding: 5px 5px; }
-    .window .pageWrapper .contact .sendWrapper .photoWrapper .photo, .window .pageWrapper .dialogList .sendWrapper .photoWrapper .photo {
-      border-radius: 100px;
-      object-fit: cover;
-      background: url("http://океанариумказань.рф/upload/iblock/def/deffbb22b0d89a8ab0d49f0f8f2dd3dd.jpg") no-repeat center center;
-      background-size: cover;
-      box-shadow: 0 0 1em 0 #fff;
-      width: 5em;
-      height: 5em; }
-    .window .pageWrapper .contact .sendWrapper .textWrapper, .window .pageWrapper .dialogList .sendWrapper .textWrapper {
-      border-bottom: 1px solid #dadada;
-      display: flex;
-      flex-direction: column;
-      margin-left: 15px;
-      width: 100%; }
-      .window .pageWrapper .contact .sendWrapper .textWrapper .information, .window .pageWrapper .dialogList .sendWrapper .textWrapper .information {
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: space-between; }
-        .window .pageWrapper .contact .sendWrapper .textWrapper .information .userName, .window .pageWrapper .dialogList .sendWrapper .textWrapper .information .userName {
-          font-size: 14px; }
-        .window .pageWrapper .contact .sendWrapper .textWrapper .information .date, .window .pageWrapper .dialogList .sendWrapper .textWrapper .information .date {
-          font-style: italic;
-          color: #585858; }
-      .window .pageWrapper .contact .sendWrapper .textWrapper .message, .window .pageWrapper .dialogList .sendWrapper .textWrapper .message {
-        white-space: pre-line; }
 
 #deviceProperties {
   display: none; }
@@ -130,28 +210,6 @@
   height: 50px;
   border-radius: 45px;
   background-position: center; }
-
-.messagesChat {
-  flex-direction: column;
-  overflow: scroll;
-  height: 300px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  display: flex;
-  width: 100%;
-  background-color: #fff; }
-  .messagesChat .receivedMessage {
-    align-self: flex-start;
-    display: block;
-    margin: 5px;
-    border: 1px solid green;
-    border-radius: 45px; }
-  .messagesChat .sentMessage {
-    align-self: flex-end;
-    display: block;
-    margin: 5px;
-    border: 1px solid red;
-    border-radius: 45px; }
 
 .contactWrapper {
   display: flex;

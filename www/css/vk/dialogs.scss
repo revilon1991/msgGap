@@ -1,0 +1,47 @@
+#page_vk_dialogs {
+  .dialog-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    .sendWrapper {
+      display: flex;
+      flex-direction: row;
+      padding: 5px 5px;
+      border-bottom: 1px solid #dadada;
+      .photoWrapper {
+        .photo {
+          border-radius: 100px;
+          object-fit: cover;
+          background: url($userFishPhoto) no-repeat center center;
+          background-size: cover;
+          box-shadow: 0 0 1em 0 #fff;
+          width: 5em;
+          height: 5em;
+        }
+      }
+      .textWrapper {
+        display: flex;
+        flex-direction: column;
+        margin-left: 15px;
+        width: 100%;
+        .information {
+          display: flex;
+          flex-wrap: nowrap;
+          flex-direction: row;
+          justify-content: space-between;
+          .userName {
+            font-size: 14px;
+          }
+          .date {
+            font-style: italic;
+            color: #585858;
+          }
+        }
+        .message {
+          white-space: pre-line;
+        }
+
+      }
+    }
+  }
+}

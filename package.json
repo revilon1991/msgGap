@@ -1,5 +1,5 @@
 {
-  "name": "com.9ek.msg",
+  "name": "com.9ek.ru.msg",
   "version": "0.0.1",
   "displayName": "msg",
   "cordova": {
@@ -17,11 +17,10 @@
       "cordova-plugin-globalization": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-network-information": {},
-      "cordova-plugin-vibration": {},
+      "cordova-plugin-vibration": {}
     }
   },
   "dependencies": {
-    "bootstrap": "^4.0.0-beta.2",
     "cordova-ios": "^4.5.4",
     "cordova-plugin-battery-status": "~1.2.4",
     "cordova-plugin-camera": "~2.4.1",
@@ -34,7 +33,9 @@
     "cordova-plugin-media-capture": "~1.4.3",
     "cordova-plugin-network-information": "~1.3.3",
     "cordova-plugin-vibration": "~2.1.5",
-    "jquery": "^3.2.1",
-    "moment": "^2.20.1"
+    "font-awesome": "^4.7.0",
+    "font-awesome-animation": "^0.2.0",
+    "moment": "^2.20.1",
+    "sprintf-js": "^1.1.1"
   }
 }

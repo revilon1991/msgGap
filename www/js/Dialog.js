@@ -8,8 +8,8 @@ class Dialog {
             eventName: 'ajaxDialog',
             data: {
                 count: 99,
-                version: '5.69',
-                access_token: window.localStorage.getItem('token_vk')
+                access_token: window.localStorage.getItem('token_vk'),
+                version: '5.69'
             }
         });
 
@@ -20,8 +20,8 @@ class Dialog {
      * Запуск процессинга диалогов,
      * последовательные ajax запросы с последующей подготовкой списка диалогов для рендеренга
      */
-    handle() {
-        this.ajaxDialog.handler();
+    handle(callable) {
+        this.ajaxDialog.handler(callable);
     }
 
     /**
@@ -46,7 +46,7 @@ class Dialog {
                 userInformation = document.createElement('div')
             ;
 
-            dialogWrapper.className = 'dialogWrapper sendWrapper';
+            dialogWrapper.className = 'button dialogWrapper sendWrapper';
             userPhotoWrapper.className = 'photoWrapper';
             textBlockWrapper.className = 'textWrapper';
             userPhoto.className = 'photo';
@@ -69,7 +69,7 @@ class Dialog {
             message.innerHTML = slicedMessage;
             let dateMessage = new Date(dialog.date * 1000);
             let getHours = dateMessage.getHours();
-            let getMinutes= dateMessage.getMinutes();
+            let getMinutes = dateMessage.getMinutes();
             let dateMessageWithoutTime =  window.moment(dateMessage).format('DD.MM.YYYY');
             let now = new Date();
             let today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).valueOf();
