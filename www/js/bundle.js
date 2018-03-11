@@ -95,19 +95,8 @@ var broadcast = {
     });
   }
 };
-var application = {
-  initialize: function initialize() {
-    this.bindEvents();
-  },
-  bindEvents: function bindEvents() {
-    document.addEventListener('deviceready', this.onDeviceReady, false);
-  },
-  onDeviceReady: function onDeviceReady() {
-    window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
-  }
-};
-application.initialize();
 (0, _jquery.default)(function ($) {
+  window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
   broadcast.connect('vk');
   $(document).on('click', '.socket', function () {
     broadcast.push('вечер в хату пацаны!');

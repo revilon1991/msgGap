@@ -24,21 +24,9 @@ let broadcast = {
     }
 };
 
-let application = {
-    initialize: function() {
-        this.bindEvents();
-    },
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-
-    },
-    onDeviceReady: function() {
-        window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
-    },
-};
-application.initialize();
-
 $(function ($) {
+    window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
+
     broadcast.connect('vk');
     $(document).on('click', '.socket', function () {
         broadcast.push('вечер в хату пацаны!');
