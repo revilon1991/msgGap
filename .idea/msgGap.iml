@@ -12,5 +12,6 @@
     <orderEntry type="library" name="jquery.mobile-1.4.5" level="application" />
     <orderEntry type="library" name="jquery.mobile-1.5.0-alpha.1" level="application" />
     <orderEntry type="library" name="jquery-migrate-3.0.0" level="application" />
+    <orderEntry type="library" name="gos_web_socket" level="application" />
   </component>
 </module>

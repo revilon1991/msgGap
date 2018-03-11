@@ -1,7 +1,19 @@
 {
   "name": "com.9ek.ru.msg",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/revilon1991/msgGap.git"
+  },
+  "homepage": "https://github.com/revilon1991/msgGap.git",
+  "license": "UNLICENSED",
+  "author": "Evgeniy Kuznetsov & Vladimir Vlasyuk",
   "displayName": "msg",
+  "scripts": {
+    "dev": "webpack --display-error-details",
+    "build": "webpack -p",
+    "watch": "webpack --watch"
+  },
   "cordova": {
     "platforms": [
       "ios"
@@ -35,7 +47,15 @@
     "cordova-plugin-vibration": "~2.1.5",
     "font-awesome": "^4.7.0",
     "font-awesome-animation": "^0.2.0",
+    "jquery": "^3.3.1",
     "moment": "^2.20.1",
+    "npm": "^5.7.1",
     "sprintf-js": "^1.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "babel-loader": "^8.0.0-beta.0",
+    "webpack": "^3.11.0"
   }
 }
