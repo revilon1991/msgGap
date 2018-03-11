@@ -30,10 +30,13 @@ let application = {
     },
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+
     },
     onDeviceReady: function() {
         window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
-        broadcast.connect('vk');
+        $(function ($) {
+            broadcast.connect('vk');
+        });
     },
 };
 application.initialize();

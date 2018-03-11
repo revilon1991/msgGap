@@ -104,7 +104,9 @@ var application = {
   },
   onDeviceReady: function onDeviceReady() {
     window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
-    broadcast.connect('vk');
+    (0, _jquery.default)(function ($) {
+      broadcast.connect('vk');
+    });
   }
 };
 application.initialize();
