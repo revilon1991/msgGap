@@ -104,14 +104,14 @@ var application = {
   },
   onDeviceReady: function onDeviceReady() {
     window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
-    (0, _jquery.default)(function ($) {
-      broadcast.connect('vk');
-    });
   }
 };
 application.initialize();
-(0, _jquery.default)(document).on('click', '.socket', function () {
-  broadcast.push('вечер в хату пацаны!');
+(0, _jquery.default)(function ($) {
+  broadcast.connect('vk');
+  $(document).on('click', '.socket', function () {
+    broadcast.push('вечер в хату пацаны!');
+  });
 });
 
 /***/ }),

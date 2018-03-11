@@ -34,13 +34,13 @@ let application = {
     },
     onDeviceReady: function() {
         window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
-        $(function ($) {
-            broadcast.connect('vk');
-        });
     },
 };
 application.initialize();
 
-$(document).on('click', '.socket', function () {
-    broadcast.push('вечер в хату пацаны!');
+$(function ($) {
+    broadcast.connect('vk');
+    $(document).on('click', '.socket', function () {
+        broadcast.push('вечер в хату пацаны!');
+    });
 });
