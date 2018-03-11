@@ -76,44 +76,40 @@ var _jquery = _interopRequireDefault(__webpack_require__(2));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _jquery.default)(function ($) {
-  window.methods = {
-    vkConnect: function vkConnect() {
-      console.log('vkConnect !!!');
-      this.webSocket = WS.connect('ws://msg.9ek.ru:49292');
-      this.webSocket.on('socket/connect', function (session) {
-        var route = (0, _sprintfJs.sprintf)('app/vk/%s/%s', 'login', 'lol-kek-hah');
-        session.subscribe(route, function (uri, payload) {
-          console.log('Received message', payload);
+var broadcast = {
+  connect: function connect(channel) {
+    var webSocket = WS.connect('ws://msg.9ek.ru:49292'),
+        self = this;
+    webSocket.on('socket/connect', function (session) {
+      var route = (0, _sprintfJs.sprintf)('app/%s/%s', channel, window.device.uuid);
+      session.subscribe(route, function (uri, payload) {
+        console.log('Received message', payload);
+      });
 
-          window.methods.vkConnect.broadcast = function (message) {
-            session.publish(route, message);
-          };
-        });
-      });
-      this.webSocket.on('socket/disconnect', function (error) {
-        console.log('Disconnected for ' + error.reason + ' with code ' + error.code);
-      });
-      $(document).on('click', '.socket', function () {
-        console.log(window.methods.vkConnect.broadcast);
-        window.methods.vkConnect.broadcast('вечер в хату пацаны!');
-      });
-      console.log('vkConnect complete !!!');
-    }
-  };
-  var application = {
-    initialize: function initialize() {
-      this.bindEvents();
-    },
-    bindEvents: function bindEvents() {
-      document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    onDeviceReady: function onDeviceReady() {
-      console.log('deviceready !!!');
-      window.methods.vkConnect();
-    }
-  };
-  application.initialize();
+      self.push = function (message) {
+        session.publish(route, message);
+      };
+    });
+    webSocket.on('socket/disconnect', function (error) {
+      console.log('Disconnected for ' + error.reason + ' with code ' + error.code);
+    });
+  }
+};
+var application = {
+  initialize: function initialize() {
+    this.bindEvents();
+  },
+  bindEvents: function bindEvents() {
+    document.addEventListener('deviceready', this.onDeviceReady, false);
+  },
+  onDeviceReady: function onDeviceReady() {
+    window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
+    broadcast.connect('vk');
+  }
+};
+application.initialize();
+(0, _jquery.default)(document).on('click', '.socket', function () {
+  broadcast.push('вечер в хату пацаны!');
 });
 
 /***/ }),

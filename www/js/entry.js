@@ -1,46 +1,43 @@
 import { sprintf } from 'sprintf-js';
 import $ from 'jquery';
 
-$(function ($) {
-    window.methods = {
-        vkConnect: function () {
-            console.log('vkConnect !!!');
-            this.webSocket = WS.connect('ws://msg.9ek.ru:49292');
+let broadcast = {
+    connect: function(channel) {
+        let webSocket = WS.connect('ws://msg.9ek.ru:49292'),
+            self = this;
 
-            this.webSocket.on('socket/connect', function (session) {
-                let route = sprintf('app/vk/%s/%s', 'login', 'lol-kek-hah');
+        webSocket.on('socket/connect', function (session) {
+            let route = sprintf('app/%s/%s', channel, window.device.uuid);
 
-                session.subscribe(route, function (uri, payload) {
-                    console.log('Received message', payload);
-                    window.methods.vkConnect.broadcast = function (message) {
-                        session.publish(route, message);
-                    }
-                });
+            session.subscribe(route, function (uri, payload) {
+                console.log('Received message', payload);
             });
 
-            this.webSocket.on('socket/disconnect', function(error){
-                console.log('Disconnected for ' + error.reason + ' with code ' + error.code);
-            });
+            self.push = function (message) {
+                session.publish(route, message);
+            };
+        });
 
-            $(document).on('click', '.socket', function () {
-                console.log(window.methods.vkConnect.broadcast);
-                window.methods.vkConnect.broadcast('вечер в хату пацаны!');
-            });
-            console.log('vkConnect complete !!!');
-        }
-    };
+        webSocket.on('socket/disconnect', function(error){
+            console.log('Disconnected for ' + error.reason + ' with code ' + error.code);
+        });
+    }
+};
 
-    const application = {
-        initialize: function() {
-            this.bindEvents();
-        },
-        bindEvents: function() {
-            document.addEventListener('deviceready', this.onDeviceReady, false);
-        },
-        onDeviceReady: function() {
-            console.log('deviceready !!!');
-            window.methods.vkConnect();
-        }
-    };
-    application.initialize();
+let application = {
+    initialize: function() {
+        this.bindEvents();
+    },
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    onDeviceReady: function() {
+        window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
+        broadcast.connect('vk');
+    },
+};
+application.initialize();
+
+$(document).on('click', '.socket', function () {
+    broadcast.push('вечер в хату пацаны!');
 });
