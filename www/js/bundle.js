@@ -95,7 +95,9 @@ var broadcast = {
     });
   }
 };
-document.addEventListener("deviceready", onDeviceReady, false);
+(0, _jquery.default)(document).ready(function () {
+  document.addEventListener("deviceready", onDeviceReady, false);
+});
 
 function onDeviceReady() {
   document.addEventListener("pause", onPause, false);

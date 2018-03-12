@@ -23,7 +23,10 @@ let broadcast = {
         });
     }
 };
-document.addEventListener("deviceready", onDeviceReady, false);
+$(document).ready(function() {
+    document.addEventListener("deviceready", onDeviceReady, false);
+});
+
 function onDeviceReady() {
     document.addEventListener("pause", onPause, false);
     document.addEventListener("resume", onResume, false);
