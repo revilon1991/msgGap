@@ -110,10 +110,11 @@ function onDeviceReady() {
     };
   }
 
-  broadcast.connect('vk');
   (0, _jquery.default)(document).on('click', '.socket', function () {
+    (0, _jquery.default)(this).css('background-color', '#000');
     broadcast.push('вечер в хату пацаны!');
   });
+  broadcast.connect('vk');
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);

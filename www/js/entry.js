@@ -37,12 +37,12 @@ function onDeviceReady() {
             uuid: 'lol-kek-hah'
         };
     }
-
-    broadcast.connect('vk');
-
     $(document).on('click', '.socket', function () {
+        $(this).css('background-color', '#000');
         broadcast.push('вечер в хату пацаны!');
     });
+
+    broadcast.connect('vk');
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);
