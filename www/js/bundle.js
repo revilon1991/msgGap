@@ -95,9 +95,10 @@ var broadcast = {
     });
   }
 };
-(0, _jquery.default)(document).ready(function () {
-  document.addEventListener("deviceready", onDeviceReady, false);
-});
+
+function onPause() {}
+
+function onResume() {}
 
 function onDeviceReady() {
   document.addEventListener("pause", onPause, false);
@@ -115,9 +116,7 @@ function onDeviceReady() {
   });
 }
 
-function onPause() {}
-
-function onResume() {}
+document.addEventListener("deviceready", onDeviceReady, false);
 
 /***/ }),
 /* 1 */
