@@ -24,9 +24,9 @@ let broadcast = {
     }
 };
 
-function onLoad() {
+$(function () {
     document.addEventListener("deviceready", onDeviceReady, false);
-}
+});
 
 // device APIs are available
 //

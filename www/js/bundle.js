@@ -95,12 +95,10 @@ var broadcast = {
     });
   }
 };
-
-function onLoad() {
+(0, _jquery.default)(function () {
   document.addEventListener("deviceready", onDeviceReady, false);
-} // device APIs are available
+}); // device APIs are available
 //
-
 
 function onDeviceReady() {
   document.addEventListener("pause", onPause, false);
