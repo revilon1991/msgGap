@@ -25,7 +25,11 @@ let broadcast = {
 };
 
 $(function ($) {
-    window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
+    if (window.device === undefined || window.device.uuid === undefined) {
+        window.device = {
+            uuid: 'lol-kek-hah'
+        };
+    }
 
     broadcast.connect('vk');
     $(document).on('click', '.socket', function () {

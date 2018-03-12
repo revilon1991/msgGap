@@ -96,7 +96,12 @@ var broadcast = {
   }
 };
 (0, _jquery.default)(function ($) {
-  window.device.uuid = window.device.uuid ? window.device.uuid : 'lol-kek-hah';
+  if (window.device === undefined || window.device.uuid === undefined) {
+    window.device = {
+      uuid: 'lol-kek-hah'
+    };
+  }
+
   broadcast.connect('vk');
   $(document).on('click', '.socket', function () {
     broadcast.push('вечер в хату пацаны!');
