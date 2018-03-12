@@ -96,16 +96,18 @@ var broadcast = {
   }
 };
 (0, _jquery.default)(function ($) {
-  if (window.device === undefined || window.device.uuid === undefined) {
-    window.device = {
-      uuid: 'lol-kek-hah'
-    };
-  }
+  document.addEventListener('deviceready', function () {
+    if (!window.device || !window.device.uuid) {
+      window.device = {
+        uuid: 'lol-kek-hah'
+      };
+    }
 
-  broadcast.connect('vk');
-  $(document).on('click', '.socket', function () {
-    broadcast.push('вечер в хату пацаны!');
-  });
+    broadcast.connect('vk');
+    $(document).on('click', '.socket', function () {
+      broadcast.push('вечер в хату пацаны!');
+    });
+  }, false);
 });
 
 /***/ }),
