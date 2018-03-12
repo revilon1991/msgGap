@@ -24,18 +24,39 @@ let broadcast = {
     }
 };
 
-$(function ($) {
-    document.addEventListener('deviceready', function() {
-        if (!window.device || !window.device.uuid) {
-            window.device = {
-                uuid: 'lol-kek-hah'
-            };
-        }
+function onLoad() {
+    document.addEventListener("deviceready", onDeviceReady, false);
+}
 
-        broadcast.connect('vk');
+// device APIs are available
+//
+function onDeviceReady() {
+    document.addEventListener("pause", onPause, false);
+    document.addEventListener("resume", onResume, false);
+    document.addEventListener("menubutton", onMenuKeyDown, false);
+    // Add similar listeners for other events
 
-        $(document).on('click', '.socket', function () {
-            broadcast.push('вечер в хату пацаны!');
-        });
-    }, false);
-});
+    if (!window.device || !window.device.uuid) {
+        window.device = {
+            uuid: 'lol-kek-hah'
+        };
+    }
+
+    broadcast.connect('vk');
+
+    $(document).on('click', '.socket', function () {
+        broadcast.push('вечер в хату пацаны!');
+    });
+}
+
+function onPause() {
+    // Handle the pause event
+}
+
+function onResume() {
+    // Handle the resume event
+}
+
+function onMenuKeyDown() {
+    // Handle the menubutton event
+}
