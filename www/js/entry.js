@@ -23,18 +23,10 @@ let broadcast = {
         });
     }
 };
-
-$(function () {
-    document.addEventListener("deviceready", onDeviceReady, false);
-});
-
-// device APIs are available
-//
+document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
     document.addEventListener("pause", onPause, false);
     document.addEventListener("resume", onResume, false);
-    document.addEventListener("menubutton", onMenuKeyDown, false);
-    // Add similar listeners for other events
 
     if (!window.device || !window.device.uuid) {
         window.device = {
@@ -49,14 +41,6 @@ function onDeviceReady() {
     });
 }
 
-function onPause() {
-    // Handle the pause event
-}
+function onPause() {}
 
-function onResume() {
-    // Handle the resume event
-}
-
-function onMenuKeyDown() {
-    // Handle the menubutton event
-}
+function onResume() {}
